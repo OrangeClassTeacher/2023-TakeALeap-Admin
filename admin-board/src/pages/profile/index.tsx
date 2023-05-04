@@ -4,7 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../assets/defaultavatar.jpeg";
-import ProfileEdit from "@/components/ProfileEdit";
+
 
 export default function Index() {
   const resId = typeof window !== "undefined" ? localStorage.getItem("id") : "";
