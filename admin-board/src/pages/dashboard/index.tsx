@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IDashboard } from "../../components/Interface";
-import { IRestaurant } from "../../components/Interface";
 import { Header } from "@/components/Header";
 
 export default function Index(): JSX.Element {
@@ -14,7 +13,7 @@ export default function Index(): JSX.Element {
         .get(`http://localhost:8080/api/dashboardgetdata?id=${resId}`)
         .then((res) => {
           setResData(res.data.data);
-          console.log(res.data.data)
+          console.log(res.data.data);
         })
         .catch((err) => console.log(err));
     }
