@@ -85,7 +85,7 @@ export const BeverageMenu = ({
           getBeverages?.map((item, index) => {
             return (
               <div
-                className="flex border rounded-lg p-2 m-2 mx-5 h-[200px]"
+                className="flex border rounded-lg p-2 m-2 mx-5 min-h-[200px]"
                 key={index}>
                 <Image
                   className="rounded-lg object-cover"
@@ -95,11 +95,12 @@ export const BeverageMenu = ({
                   height={300}
                   priority={false}
                 />
-                <div className="p-1 flex flex-col justify-between">
-                  <div>
-                    <h4>{item?.beverageName}</h4>
-                    <p>{item?.price}</p>
-                    <p>{item?.beverageType}</p>
+                <div className="p-1 flex flex-col justify-between ms-2">
+                  <div className="flex flex-col gap-1">
+                    <h4> Name: {item?.beverageName}</h4>
+                    <p>Price :{item?.price}</p>
+                    <p>Type: {item?.beverageType}</p>
+                    <p>Description: {item?.description}</p>
                   </div>
                   <div className="flex gap-5">
                     <button
