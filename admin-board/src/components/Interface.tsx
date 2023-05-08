@@ -1,3 +1,5 @@
+import { Token } from "typescript";
+
 export interface IRestaurant {
   _id?: string;
   restaurantName?: string;
@@ -39,22 +41,27 @@ export interface IRestaurant {
 }
 
 export interface IFood {
-  _id: string;
+  _id: string | null | string[];
   foodName: string;
-  restaurantId: string;
+  restaurantId: string | null;
   price: number;
   foodType: string;
   img: string[];
-  ingredients: string[];
+  ingredients: string;
+  description: string;
+  token: string | null;
 }
 
 export interface IBeverage {
-  _id: string | null;
+  _id: string | null | string[];
   beverageName: string;
-  restaurantId: string;
+  restaurantId: string | null;
   price: number;
   beverageType: string;
   img: string[];
+  ingredients: string;
+  description: string;
+  token: string | null;
 }
 
 

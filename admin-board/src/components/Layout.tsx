@@ -17,7 +17,7 @@ export const Layout = ({ children }: myProps): JSX.Element => {
             ? "block"
             : route.pathname == "/registerRes"
             ? "block"
-            : "flex bg-slate-300"
+            : "flex bg-[#b7c2c9]"
         }>
         <div
           className={

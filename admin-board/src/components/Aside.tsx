@@ -20,29 +20,35 @@ export const Aside = () => {
         <div className=" flex flex-col gap-5">
           <Link
             href="/dashboard"
-            style={{
-              color: route.pathname == "/dashboard" ? "blue" : "black",
-            }}>
-            <h3 className="flex items-center gap-2 hover:text-blue-700">
+            className={
+              route.pathname == "/dashboard"
+                ? "text-white bg-[#091225] rounded-full p-2"
+                : "text-gray-600 p-2 hover:text-black"
+            }>
+            <h3 className="flex items-center gap-2">
               <MdLeaderboard /> Dashboard
             </h3>
           </Link>
           <Link
             href="/profile"
-            style={{
-              color: route.pathname == "/profile" ? "blue" : "black",
-            }}>
-            <h3 className="flex items-center gap-2 hover:text-blue-700">
+            className={
+              route.pathname == "/profile"
+                ? "text-white bg-[#091225] rounded-full p-2"
+                : "text-gray-600 p-2  hover:text-black"
+            }>
+            <h3 className="flex items-center gap-2">
               <CgProfile />
               Profile
             </h3>
           </Link>
           <Link
             href="/menu"
-            style={{
-              color: route.pathname == "/menu" ? "blue" : "black",
-            }}>
-            <h3 className="flex items-center gap-2 hover:text-blue-700">
+            className={
+              route.pathname == "/menu"
+                ? "text-white bg-[#091225] rounded-full p-2"
+                : "text-gray-600 p-2  hover:text-black"
+            }>
+            <h3 className="flex items-center gap-2">
               <FiMenu />
               Menu
             </h3>
@@ -50,7 +56,7 @@ export const Aside = () => {
         </div>
         <div>
           <Link onClick={() => localStorage.removeItem("token")} href="/">
-            <h3 className="flex items-center gap-2 hover:text-blue-700">
+            <h3 className="flex items-center gap-2 text-gray-600 p-2  hover:text-black">
               <BiLogOut />
               Logout
             </h3>
