@@ -3,14 +3,14 @@ import { Token } from "typescript";
 export interface IRestaurant {
   _id?: string;
   restaurantName?: string;
-  address?: {
-    district?: string;
-    street?: string;
-    building?: string;
-    address?: string;
-    location?: {
-      type?: string;
-      coordinates?: number[];
+  address: {
+    district: string;
+    street: string;
+    building: string;
+    address: string;
+    location: {
+      type: string;
+      coordinates: number[];
     };
   };
   restaurantRate?: [
@@ -30,7 +30,7 @@ export interface IRestaurant {
   };
   email?: string;
   img: string[];
-  logoImg: string | null;
+  logoImg: string;
   schedule?: {
     weekday?: { open?: number; close?: number };
     weekend?: { open?: number; close?: number };
@@ -62,4 +62,48 @@ export interface IBeverage {
   ingredients: string;
   description: string;
   token: string | null;
+}
+
+
+export interface IResImg {
+  img: string[]
+  logoImg: string | null
+}
+
+
+export interface IDashboard {
+  foodRate:
+  {
+    avg_rate: number
+  }
+  ,
+  latestComms:
+  {
+    restaurantId: string,
+    foodId: string,
+    comment: string,
+    createdAt: string
+  }
+  ,
+  resRate:
+  {
+    avg_score: number
+  }
+  ,
+  topFood:
+  {
+    foodId: string,
+    food: {
+      foodName: string,
+      restaurantId: string,
+      price: number,
+      foodType: string,
+      img: string[],
+      ingredients: string[],
+      createdAt: string,
+      updatedAt: string,
+    },
+    avg_rate: number
+  }
+
 }
