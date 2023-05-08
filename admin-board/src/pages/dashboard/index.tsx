@@ -1,16 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { IRestaurant } from "../../components/Interface";
+import { IDashboard } from "../../components/Interface";
 
-export default function Index() {
+export default function Index(): JSX.Element {
   const resId = typeof window !== "undefined" ? localStorage.getItem("id") : "";
-  const [resData, setResDate] = useState<IRestaurant>({});
+  const [resData, setResData] = useState<IDashboard>();
 
   useEffect(() => {
     if (resId) {
       axios
-        .get(`http://localhost:8080/api/restaurant?id=${resId}`)
-        .then((res) => setResDate(res.data.result))
+        .get(`http://localhost:8080/api/dashboardgetdata?id=${resId}`)
+        .then((res) => {
+          setResData(res.data.data);
+          console.log(res.data.data)
+        })
         .catch((err) => console.log(err));
     }
   }, []);
@@ -18,7 +21,7 @@ export default function Index() {
   return (
     <div className=" bg-slate-300 m-5">
       <div className="text-3xl font-medium mb-5">
-        {resData.restaurantName} Dashboard
+        Dashboard
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div className="bg-white rounded-lg p-10">Restaurant rate</div>
