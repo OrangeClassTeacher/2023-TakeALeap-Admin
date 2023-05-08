@@ -4,6 +4,7 @@ import { BeverageMenu } from "@/components/BeverageMenu";
 import axios from "axios";
 import { IFood } from "@/components/Interface";
 import { IBeverage } from "@/components/Interface";
+import { Header } from "@/components/Header";
 
 export default function Index() {
   const [getFood, setGetFood] = useState<IFood[]>([]);
@@ -30,6 +31,9 @@ export default function Index() {
 
   return (
     <div className="">
+      <div className="text-3xl font-medium my-5 mx-10">
+        <Header board={"Menu"} />
+      </div>
       <div
         className={
           getFood.length > 0

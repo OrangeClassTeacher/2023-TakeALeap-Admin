@@ -81,7 +81,7 @@ export const FoodsMenu = ({
           getFood?.map((item, index) => {
             return (
               <div
-                className="flex border rounded-lg p-2 m-2 mx-5 h-[200px]"
+                className="flex border rounded-lg p-2 m-2 mx-5 min-h-[200px] w-full"
                 key={index}>
                 <Image
                   className="rounded-lg object-cover"
@@ -93,10 +93,11 @@ export const FoodsMenu = ({
                 />
                 <div className="p-3 flex flex-col justify-between">
                   <div>
-                    <h4>Хоолны нэр: {item?.foodName}</h4>
-                    <p>Үнэ: {item?.price}</p>
-                    <p>Төрөл: {item?.foodType}</p>
-                    <p>Орц: {item?.ingredients}</p>
+                    <h4>Name: {item?.foodName}</h4>
+                    <p>Price: {item?.price}</p>
+                    <p>Type: {item?.foodType}</p>
+                    <p>Ingredient: {item?.ingredients}</p>
+                    <p>Description: {item?.description}</p>
                   </div>
                   <div className="flex gap-5">
                     <button

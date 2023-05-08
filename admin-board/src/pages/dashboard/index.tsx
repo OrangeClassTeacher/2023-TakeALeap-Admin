@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { IRestaurant } from "../../components/Interface";
+import { Header } from "@/components/Header";
 
 export default function Index() {
   const resId = typeof window !== "undefined" ? localStorage.getItem("id") : "";
-  const [resData, setResDate] = useState<IRestaurant>({});
+  const [resData, setResDate] = useState<IRestaurant>();
 
   useEffect(() => {
     if (resId) {
@@ -16,9 +17,10 @@ export default function Index() {
   }, []);
 
   return (
-    <div className=" bg-slate-300 m-5">
+    <div className="bg-[#b7c2c9] m-5">
       <div className="text-3xl font-medium mb-5">
-        {resData.restaurantName} Dashboard
+        <Header board={"Dashboard"} />
+        {/* {resData.restaurantName} Dashboard */}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div className="bg-white rounded-lg p-10">Restaurant rate</div>
