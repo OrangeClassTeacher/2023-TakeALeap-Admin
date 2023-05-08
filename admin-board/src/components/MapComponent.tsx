@@ -1,8 +1,9 @@
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { useState } from "react";
+import { IRestaurant } from "./Interface";
 
-// const libraries = ["places"];
-export default function MapComponent() {
+
+export default function MapComponent({ setResData, resData }: { resData: IRestaurant, setResData: any }) {
     const mapStyle = {
         borderRadius: '20px',
         height: '300px',
@@ -10,14 +11,13 @@ export default function MapComponent() {
     }
 
     const [cursorType, setCursorType] = useState("");
-    // Loads the map using API KEY
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: "AIzaSyAhjl1X_pQkIAeTUWlWv4cKKUDqgyxDCQE",
     });
     const [startCoordinates, setStartCoordinates] = useState({ x: "", y: "" });
     const [choose, setChoose] = useState<boolean>(false); //false - start, true - finish
 
-    // This returns while map is being loaded
+
     if (!isLoaded) return <div>Loading...</div>;
     return (
         <div>
@@ -44,6 +44,9 @@ export default function MapComponent() {
                 onClick={(e) => {
                     if (!choose) {
                         setStartCoordinates({ x: e.latLng?.lat(), y: e.latLng?.lng() });
+                        setResData({
+                            ...resData, address: { ...resData.address, location: { ...resData.address.location, coordinates: [...resData.address.location.coordinates, e.latLng?.lat(), e.latLng?.lng()] } }
+                        })
                     }
                 }}
                 zoom={13}
@@ -54,6 +57,6 @@ export default function MapComponent() {
                     position={{ lat: +startCoordinates.x, lng: +startCoordinates.y }}
                 />
             </GoogleMap>
-        </div>
+        </div >
     );
 }
