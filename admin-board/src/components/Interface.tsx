@@ -38,6 +38,7 @@ export interface IRestaurant {
   description?: string;
   createdAt: string;
   updatedAt: string;
+  token?: string
 }
 
 export interface IFood {
@@ -72,38 +73,38 @@ export interface IResImg {
 
 
 export interface IDashboard {
-  foodRate:
-  {
-    avg_rate: number
-  }
-  ,
-  latestComms:
-  {
-    restaurantId: string,
-    foodId: string,
-    comment: string,
-    createdAt: string
-  }
-  ,
-  resRate:
-  {
-    avg_score: number
-  }
-  ,
-  topFood:
-  {
-    foodId: string,
-    food: {
-      foodName: string,
-      restaurantId: string,
-      price: number,
-      foodType: string,
-      img: string[],
-      ingredients: string[],
-      createdAt: string,
-      updatedAt: string,
-    },
-    avg_rate: number
-  }
-
+  status: boolean;
+  data: {
+    foodRate: {
+      _id: string;
+      avg_rate: number;
+    };
+    latestComms: {
+      _id: string;
+      restaurantId: string;
+      foodId: string;
+      comment: string;
+      createdAt: string;
+    }[];
+    resRate: {
+      _id: string;
+      avg_score: number;
+    };
+    topFood: {
+      foodId: string;
+      food: {
+        _id: string;
+        foodName: string;
+        restaurantId: string;
+        price: number;
+        foodType: string;
+        img: string[];
+        ingredients: string[];
+        createdAt: string;
+        updatedAt: string;
+        __v: number;
+      };
+      avg_rate: number;
+    }[];
+  };
 }

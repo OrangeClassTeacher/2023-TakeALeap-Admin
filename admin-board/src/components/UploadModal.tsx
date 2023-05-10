@@ -19,6 +19,8 @@ export const UploadModal = ({
     const [typeImg, setTypeImg] = useState("")
 
     const resId = typeof window !== "undefined" ? localStorage.getItem("id") : "";
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
+
 
     const getData = () => {
         setLoading(true)
@@ -33,7 +35,7 @@ export const UploadModal = ({
     }
 
     const editImg = () => {
-        const fileSend = typeImg == "img" ? { img: imgSave } : { logoImg: imgSave[0] }
+        const fileSend = typeImg == "img" ? { img: imgSave, token: token } : { logoImg: imgSave[0], token: token }
 
         axios
             .put(`http://localhost:8080/api/restaurant?id=${resId}`, fileSend)

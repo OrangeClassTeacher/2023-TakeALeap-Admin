@@ -6,11 +6,11 @@ import { Layout } from "@/components/Layout";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <SessionProvider session={pageProps.session}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </SessionProvider>
+      {/* <SessionProvider session={pageProps.session}> */}
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+      {/* </SessionProvider> */}
     </>
   );
 }

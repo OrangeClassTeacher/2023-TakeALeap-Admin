@@ -24,7 +24,7 @@ export default function MapComponent({ setResData, resData }: { resData: IRestau
             <div className="flex item-center gap-10">
                 <label className="text-l">Coordinates: </label>
                 <input
-                    placeholder="x"
+                    // placeholder="x"
                     value={startCoordinates.x}
                     onFocus={() => {
                         setCursorType("crosshair");
@@ -33,7 +33,7 @@ export default function MapComponent({ setResData, resData }: { resData: IRestau
                     className="form-input"
                 />
                 <input
-                    placeholder="y"
+                    // placeholder="y"
                     value={startCoordinates.y}
                     className="form-input"
                 />
