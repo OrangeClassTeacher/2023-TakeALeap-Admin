@@ -37,7 +37,7 @@ export const BeverageMenu = ({
     await axios
       .get(`http://localhost:8080/api/getrestaurantbeverages?id=${resId}`)
       .then((res) => {
-        setGetBeverages(res.data.result);
+        setGetBeverages({ ...res.data.result, token: token });
       })
       .catch((err) => {
         console.log(err);
@@ -47,9 +47,9 @@ export const BeverageMenu = ({
   const deleteBeverage = async (id: any) => {
     if (confirm("delete???")) {
       await axios
-        .delete(`http://localhost:8080/api/beverage?id=${id}`)
+        .post(`http://localhost:8080/api/beverage?id=${id}`, { token: token })
         .then((res) => {
-          res.data.status ? getData() : alert("Try agian");
+          res.data.status ? (alert("succes"), getData()) : alert("Try agian");
         })
         .catch((err) => {
           console.log(err);
@@ -60,7 +60,7 @@ export const BeverageMenu = ({
   const fillData = async (id: any) => {
     await axios
       .get(`http://localhost:8080/api/beverage?id=${id}`)
-      .then((res) => setBeverage(res.data.result))
+      .then((res) => setBeverage({ ...res.data.result, token: token }))
       .catch((err) => console.log(err));
 
     route.push(`/menu?id=${id}`);

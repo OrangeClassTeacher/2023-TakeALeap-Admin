@@ -19,6 +19,8 @@ export default function FoodMenuModal({
   setFood: any;
 }) {
   const resId = typeof window !== "undefined" ? localStorage.getItem("id") : "";
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : "";
   const route = useRouter();
   const { id } = route.query;
 

@@ -73,6 +73,7 @@ export default function Login(): JSX.Element {
                     ? "border-red-300 focus:outline-none"
                     : "border-green-300 focus:outline-none"
                 } w-full`}
+                type="password"
                 placeholder="Password"
                 value={restaurant.password}
                 onChange={(e) => {

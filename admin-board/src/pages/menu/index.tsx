@@ -9,24 +9,27 @@ import { Header } from "@/components/Header";
 export default function Index() {
   const [getFood, setGetFood] = useState<IFood[]>([]);
   const [getBeverages, setGetBeverages] = useState<IBeverage[]>([]);
-  const resId = typeof window !== "undefined" ? localStorage.getItem("id") : "";
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/api/restaurantfoods?id=${resId}`)
-      .then((res) => {
-        setGetFood(res.data.result);
-      })
-      .catch((err) => console.log(err));
+    const resId =
+      typeof window !== "undefined" ? localStorage.getItem("id") : "";
+    if (resId) {
+      axios
+        .get(`http://localhost:8080/api/restaurantfoods?id=${resId}`)
+        .then((res) => {
+          setGetFood(res.data.result);
+        })
+        .catch((err) => console.log(err));
 
-    axios
-      .get(`http://localhost:8080/api/getrestaurantbeverages?id=${resId}`)
-      .then((res) => {
-        setGetBeverages(res.data.result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      axios
+        .get(`http://localhost:8080/api/getrestaurantbeverages?id=${resId}`)
+        .then((res) => {
+          setGetBeverages(res.data.result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
 
   return (

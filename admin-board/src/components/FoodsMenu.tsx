@@ -44,9 +44,9 @@ export const FoodsMenu = ({
   const deleteFood = (id: any) => {
     if (confirm("delete???")) {
       axios
-        .delete(`http://localhost:8080/api/food?id=${id}`)
+        .post(`http://localhost:8080/api/food?id=${id}`, { token: token })
         .then((res) => {
-          res.data.status ? getData() : alert("try again");
+          res.data.status ? (alert("succes"), getData()) : alert("try again");
         })
         .catch((err) => {
           console.log(err);
@@ -57,7 +57,7 @@ export const FoodsMenu = ({
   const fillData = async (id: any) => {
     await axios
       .get(`http://localhost:8080/api/food?id=${id}`)
-      .then((res) => setFood(res.data.result))
+      .then((res) => setFood({ ...res.data.result, token: token }))
       .catch((err) => console.log(err));
     setModal(!modal);
     route.push(`/menu?id=${id}`);
