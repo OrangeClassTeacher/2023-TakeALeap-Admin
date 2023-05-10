@@ -20,7 +20,7 @@ export default function Index(): JSX.Element {
         .get(`http://localhost:8080/api/dashboardgetdata?id=${resId}`)
         .then((res) => {
           setResData(res.data.data);
-          console.log(res.data.data)
+          console.log(res.data.data);
         })
         .catch((err) => console.log(err))
         .finally(() => setLoading(false))
