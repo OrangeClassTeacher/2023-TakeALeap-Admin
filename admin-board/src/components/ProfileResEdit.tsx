@@ -10,6 +10,8 @@ export const ProfileResEdit = ({ modalShow, setModalShow, resData, setResData }:
     setResData: any
 
 }) => {
+    const resId = typeof window !== "undefined" ? localStorage.getItem("id") : "";
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
     const init: IRestaurant = {
         restaurantName: '',
         address: {
@@ -47,22 +49,15 @@ export const ProfileResEdit = ({ modalShow, setModalShow, resData, setResData }:
         description: "",
         createdAt: "",
         updatedAt: "",
+        token: token ? token : ""
     }
-
-    const resId = typeof window !== "undefined" ? localStorage.getItem("id") : "";
-
-
-
     const getData = () => {
         axios.get(`http://localhost:8080/api/restaurant?id=${resId}`)
             .then((res) => setResData(res.data.result))
-            .catch((err) => console.log(err)
-            )
+            .catch((err) => console.log(err))
     }
 
     const editProfile = () => {
-        console.log(resData);
-
         axios
             .put(`http://localhost:8080/api/restaurant?id=${resId}`, resData)
             .then((res) => {
@@ -79,17 +74,12 @@ export const ProfileResEdit = ({ modalShow, setModalShow, resData, setResData }:
         <div>
             <div style={{ display: modalShow ? "block" : "none" }} id="medium-modal" className="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                 <div className="relative w-full max-w-lg max-h-full">
-                    {/* <!-- Modal content --> */}
                     <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        {/* <!-- Modal header --> */}
                         <div className="flex items-center justify-between p-5 border-b rounded-t dark:border-gray-600">
                             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
                                 Edit profile
-                                {/* Default modal */}
                             </h3>
-
                         </div>
-                        {/* <!-- Modal body --> */}
                         <div className="p-6 space-y-6" >
                             <div className='flex flex-col'>
                                 <label htmlFor="" className='text-gray-900 text-sm text-white'>Restaurant name:</label>
@@ -105,7 +95,17 @@ export const ProfileResEdit = ({ modalShow, setModalShow, resData, setResData }:
                             </div>
                             <div className='flex flex-col'>
                                 <label htmlFor="" className='text-gray-900 text-sm text-white'>District:</label>
-                                <input value={resData?.address?.district} onChange={(e) => setResData({ ...resData, address: { ...resData.address, district: e.target.value } })} type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                <select value={resData?.address?.district} onChange={(e) => setResData({ ...resData, address: { ...resData.address, district: e.target.value } })} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value={"Багануур"}>Багануур</option>
+                                    <option value={"Багахангай"}>Багахангай</option>
+                                    <option value={"Баянгол"}>Баянгол</option>
+                                    <option value={"Баянзүрх"}>Баянзүрх</option>
+                                    <option value={"Налайх"}>Налайх</option>
+                                    <option value={"Сонгинохайрхан"}>Сонгинохайрхан</option>
+                                    <option value={"Сүхбаатар"}>Сүхбаатар</option>
+                                    <option value={"Хан-уул"}>Хан-уул</option>
+                                    <option value={"Чингэлтэй"}>Чингэлтэй</option>
+                                </select>
                             </div>
                             <div className='flex flex-col'>
                                 <label htmlFor="" className='text-gray-900 text-sm text-white'>Street:</label>
@@ -120,7 +120,15 @@ export const ProfileResEdit = ({ modalShow, setModalShow, resData, setResData }:
                             </div>
                             <div className='flex flex-col'>
                                 <label htmlFor="" className='text-gray-900 text-sm text-white'>Cuisine type:</label>
-                                <input value={resData?.cuisineType} onChange={(e) => setResData({ ...resData, cuisineType: e.target.value })} type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                <select value={resData?.cuisineType} onChange={(e) => setResData({ ...resData, cuisineType: e.target.value })} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value={"Other"}>Other</option>
+                                    <option value={"Soup"}>Soup</option>
+                                    <option value={"Main Course"}>Main Course</option>
+                                    <option value={"Dessert"}>Dessert</option>
+                                    <option value={"SetFood"}>SetFood</option>
+                                    <option value={"Traditional"}>Traditional</option>
+                                    <option value={"FastFood"}>FastFood</option>
+                                </select>
                             </div>
                             <div className='flex flex-col'>
                                 <label htmlFor="" className='text-gray-900 text-sm text-white'>Phone:</label>
@@ -141,15 +149,15 @@ export const ProfileResEdit = ({ modalShow, setModalShow, resData, setResData }:
                             <div className='flex flex-col'>
                                 <label htmlFor="" className='text-gray-900 text-sm text-white'>Weekday: OPEN~~~CLOSE</label>
                                 <div className='flex'>
-                                    <input value={resData?.schedule?.weekday?.open} onChange={(e) => setResData({ ...resData, schedule: { ...resData.schedule, weekday: { ...resData.schedule.weekday, open: e.target.value } } })} type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-                                    <input value={resData?.schedule?.weekday?.close} onChange={(e) => setResData({ ...resData, schedule: { ...resData.schedule, weekday: { ...resData.schedule.weekday, close: e.target.value } } })} type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                    <input value={resData?.schedule?.weekday?.open} onChange={(e) => setResData({ ...resData, schedule: { ...resData?.schedule, weekday: { ...resData?.schedule?.weekday, open: e.target.value } } })} type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                    <input value={resData?.schedule?.weekday?.close} onChange={(e) => setResData({ ...resData, schedule: { ...resData?.schedule, weekday: { ...resData?.schedule?.weekday, close: e.target.value } } })} type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
                                 </div>
                             </div>
                             <div className='flex flex-col'>
                                 <label htmlFor="" className='text-gray-900 text-sm text-white'>Weekend:</label>
                                 <div className='flex'>
-                                    <input value={resData?.schedule?.weekend?.open} onChange={(e) => setResData({ ...resData, schedule: { ...resData.schedule, weekend: { ...resData.schedule.weekend, open: e.target.value } } })} type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-                                    <input value={resData?.schedule?.weekend?.close} onChange={(e) => setResData({ ...resData, schedule: { ...resData.schedule, weekend: { ...resData.schedule.weekend, close: e.target.value } } })} type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                    <input value={resData?.schedule?.weekend?.open} onChange={(e) => setResData({ ...resData, schedule: { ...resData?.schedule, weekend: { ...resData?.schedule?.weekend, open: e.target.value } } })} type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                    <input value={resData?.schedule?.weekend?.close} onChange={(e) => setResData({ ...resData, schedule: { ...resData?.schedule, weekend: { ...resData?.schedule?.weekend, close: e.target.value } } })} type="text" className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
                                 </div>
                             </div>
                         </div>

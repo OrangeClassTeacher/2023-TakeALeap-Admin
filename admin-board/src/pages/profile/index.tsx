@@ -11,8 +11,48 @@ import MapComponent from "@/components/MapComponent";
 
 
 export default function Index() {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
+    const init: IRestaurant = {
+        restaurantName: '',
+        address: {
+            district: '',
+            street: "",
+            building: "",
+            address: "",
+            location: {
+                type: "",
+                coordinates: [],
+            },
+        },
+        restaurantRate: [
+            {
+                rateType: "",
+                userId: "",
+                score: 0,
+                comment: "",
+            }
+        ],
+        cuisineType: [],
+        contact: {
+            phone: 0,
+            facebook: "",
+            Instagram: "",
+            link: "",
+        },
+        email: "",
+        img: [],
+        logoImg: "",
+        schedule: {
+            weekday: { open: 0, close: 0 },
+            weekend: { open: 0, close: 0 },
+        },
+        description: "",
+        createdAt: "",
+        updatedAt: "",
+        token: token ? token : ""
+    }
     const resId = typeof window !== "undefined" ? localStorage.getItem("id") : "";
-    const [resData, setResData] = useState<IRestaurant>();
+    const [resData, setResData] = useState<IRestaurant>(init);
     const [modalShow, setModalShow] = useState<boolean>(false);
     const [modal, setModal] = useState<boolean>(false);
     const [multi, setMulti] = useState<boolean>(false);
@@ -23,9 +63,13 @@ export default function Index() {
         if (resId) {
             axios
                 .get(`http://localhost:8080/api/restaurant?id=${resId}`)
-                .then((res) => setResData(res.data.result))
+                .then((res) => {
+                    setResData({ ...res.data.result, token: token ? token : "" });
+                })
                 .catch((err) => console.log(err));
         }
+        console.log(resData);
+
     }, []);
 
     return (
@@ -35,6 +79,7 @@ export default function Index() {
             </div>
             <div className="bg-white border rounded-lg w-6/6 h-full gap-5 m-5 p-5">
                 <div className="relative mb-32">
+
                     <Image
                         className="rounded-lg w-full h-[400px] object-cover"
                         src={resData?.img[0] ? resData?.img[0] : ""}
@@ -45,6 +90,7 @@ export default function Index() {
                         alt="food"
                         width={700}
                         height={700}
+                        priority={true}
                     />
                     <Image
                         onClick={() => {
@@ -58,6 +104,7 @@ export default function Index() {
                         alt="food"
                         width={200}
                         height={200}
+                        priority={true}
                     />
 
                 </div>
@@ -108,7 +155,7 @@ export default function Index() {
                         <h3 className="border-b focus:outline-none focus:border-purple-600 focus:border-b-2 transition-colors peer" > {resData?.contact?.link}</h3>
                     </div>
                     <div className="flex flex-row ">
-                        <MapComponent />
+                        <MapComponent resData={resData} setResData={setResData} />
                     </div>
                     <div className="flex gap-5 w-full">
                         <h3 className="font-bold w-2/6">Schedule:</h3>
