@@ -21,8 +21,8 @@ export default function MapComponent({ setResData, resData }: { resData: IRestau
     if (!isLoaded) return <div>Loading...</div>;
     return (
         <div>
-            <div className="flex item-center gap-10">
-                <label className="text-l">Coordinates: </label>
+            <div className="flex item-center gap-10 mb-5">
+                <label className="text-l text-white">Coordinates: </label>
                 <input
                     // placeholder="x"
                     value={startCoordinates.x}
@@ -30,12 +30,12 @@ export default function MapComponent({ setResData, resData }: { resData: IRestau
                         setCursorType("crosshair");
                         setChoose(false);
                     }}
-                    className="form-input"
+                    className="py-2 px-3 rounded-md bg-gray-100 focus:outline-none focus:bg-gray-200 flex-grow w-3/4 text-black"
                 />
                 <input
                     // placeholder="y"
                     value={startCoordinates.y}
-                    className="form-input"
+                    className="py-2 px-3 rounded-md bg-gray-100 focus:outline-none focus:bg-gray-200 flex-grow w-3/4 text-black"
                 />
             </div>
             <GoogleMap

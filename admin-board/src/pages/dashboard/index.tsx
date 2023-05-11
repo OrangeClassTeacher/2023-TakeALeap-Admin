@@ -5,7 +5,7 @@ import { Header } from "@/components/Header";
 import Image from "next/image";
 import { Dna } from "react-loader-spinner";
 import { BiTime, BiCommentDetail } from 'react-icons/bi'
-import { CgProfile } from 'react-icons/cg'
+import Utils from "@/utils/helper";
 
 export default function Index(): JSX.Element {
 
@@ -17,7 +17,7 @@ export default function Index(): JSX.Element {
     if (resId) {
       setLoading(true)
       axios
-        .get(`http://localhost:8080/api/dashboardgetdata?id=${resId}`)
+        .get(`${Utils.API_URL}/dashboardgetdata?id=${resId}`)
         .then((res) => {
           setResData(res.data.data);
           console.log(res.data.data);
@@ -55,7 +55,7 @@ export default function Index(): JSX.Element {
         </div>
         <div className="bg-white rounded-lg p-10">Last week</div>
       </div>
-      <div className="bg-white rounded-lg my-10 p-10">
+      <div className="bg-white rounded-lg my-10 p-10 min-h-[400px] overflow-y-scroll">
         {
           resData?.latestComms.map((item: any, index: any) => {
             const dateObj = new Date(item.createdAt);
@@ -63,12 +63,17 @@ export default function Index(): JSX.Element {
             const hours = dateObj.getHours();
             const minutes = dateObj.getMinutes();
             const seconds = dateObj.getSeconds()
-            const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`; // Adding leading zero to minutes if they're less than 10
+            const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
             return (
               <div key={index} className="flex flex-col gap-2 border-4 rounded-lg p-2 m-2 mx-5 min-h-[100px] w-full">
                 <div className="flex gap-3">
-                  <CgProfile />
+                  <Image
+                    src={item.userImg[0]}
+                    alt={item.userId}
+                    width={20} height={20}
+                    className='rounded-full border object-cover'
+                  />
                   <h4 className="font-medium text-indigo-500">{item.userId}</h4>
                 </div>
                 <div className="flex gap-3">

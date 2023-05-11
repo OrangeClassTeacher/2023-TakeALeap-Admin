@@ -5,6 +5,7 @@ import axios from "axios";
 import { IFood } from "@/components/Interface";
 import { IBeverage } from "@/components/Interface";
 import { Header } from "@/components/Header";
+import Utils from "@/utils/helper";
 
 export default function Index() {
   const [getFood, setGetFood] = useState<IFood[]>([]);
@@ -15,14 +16,14 @@ export default function Index() {
       typeof window !== "undefined" ? localStorage.getItem("id") : "";
     if (resId) {
       axios
-        .get(`http://localhost:8080/api/restaurantfoods?id=${resId}`)
+        .get(`${Utils.API_URL}/restaurantfoods?id=${resId}`)
         .then((res) => {
           setGetFood(res.data.result);
         })
         .catch((err) => console.log(err));
 
       axios
-        .get(`http://localhost:8080/api/getrestaurantbeverages?id=${resId}`)
+        .get(`${Utils.API_URL}/getrestaurantbeverages?id=${resId}`)
         .then((res) => {
           setGetBeverages(res.data.result);
         })

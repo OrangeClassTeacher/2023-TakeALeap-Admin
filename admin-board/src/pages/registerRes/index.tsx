@@ -3,6 +3,7 @@ import { BiArrowBack } from "react-icons/bi";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Utils from "@/utils/helper";
 
 export default function Register(): JSX.Element {
   const defRes = {
@@ -46,7 +47,7 @@ export default function Register(): JSX.Element {
     if (newUser.email && newUser.password && newUser.restaurantName) {
       if (newUser.email.includes("@gmail.com")) {
         axios
-          .post("http://localhost:8080/api/restaurant", newUser)
+          .post(`${Utils.API_URL}/restaurant`, newUser)
           .then(async (res) => {
             if (res.data.status) {
               setNewUser(defRes);
