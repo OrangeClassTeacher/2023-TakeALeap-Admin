@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { IRestaurant } from "@/components/Interface";
 import axios from "axios";
-import Link from "next/link";
 import Image from "next/image";
 import logo from "../../assets/defaultavatar.jpeg";
 import { ProfileResEdit } from "@/components/ProfileResEdit";
-import ProfileEdit from "@/components/ProfileEdit";
 import { UploadModal } from "@/components/UploadModal";
+// import { Map } from "@/components/Map";
+import { AiFillCamera } from 'react-icons/ai'
 import MapComponent from "@/components/MapComponent";
+import Utils from "@/utils/helper";
 
 export default function Index() {
   const token =
@@ -36,7 +37,7 @@ export default function Index() {
     contact: {
       phone: 0,
       facebook: "",
-      Instagram: "",
+      instagram: "",
       link: "",
     },
     email: "",
@@ -61,7 +62,7 @@ export default function Index() {
   useEffect(() => {
     if (resId) {
       axios
-        .get(`http://localhost:8080/api/restaurant?id=${resId}`)
+        .get(`${Utils.API_URL}/restaurant?id=${resId}`)
         .then((res) => {
           setResData({ ...res.data.result, token: token ? token : "" });
         })
@@ -82,33 +83,42 @@ export default function Index() {
       </div>
       <div className="bg-white border rounded-lg w-6/6 h-full gap-5 m-5 p-5">
         <div className="relative mb-32">
-          <Image
-            className="rounded-lg w-full h-[400px] object-cover"
-            src={resData?.img[0] ? resData?.img[0] : ""}
-            onClick={() => {
-              setMulti(true);
-              setModal(!modal);
-            }}
-            alt="food"
-            width={700}
-            height={700}
-            priority={true}
-          />
-          <Image
-            onClick={() => {
-              setMulti(false);
-              setModal(!modal);
-            }}
-            className="rounded-full absolute -bottom-20 left-20 border w-[200px] h-[200px] object-cover"
-            src={resData?.logoImg ? resData?.logoImg : logo}
-            alt="food"
-            width={200}
-            height={200}
-            priority={true}
-          />
+          <div className="flex flex-col relative">
+            <Image
+              className="rounded-lg w-full h-[400px] object-cover"
+              src={resData?.img[0] ? resData?.img[0] : ""}
+              alt="food"
+              width={700}
+              height={700}
+              priority={true}
+            />
+            <div className="rounded-full border-1 bg-gray-200 hover:bg-gray-400 active:bg-gray-500 focus:outline-none focus:ring focus:ring-gray-300  p-2 absolute right-2 bottom-2  min-w-[2.8%]">
+              <AiFillCamera onClick={() => {
+                setMulti(true);
+                setModal(!modal);
+              }} />
+            </div>
+          </div>
+          <div className="flex flex-col relative w-2/6">
+            <Image
+              className="rounded-full absolute -bottom-20 left-20 border w-[200px] h-[200px] object-cover"
+              src={resData?.logoImg ? resData?.logoImg : logo}
+              alt="food"
+              width={200}
+              height={200}
+              priority={true}
+            />
+            <div className="rounded-full bg-gray-300 hover:bg-gray-400 active:bg-gray-500 focus:outline-none focus:ring focus:ring-gray-300  p-2 absolute right-32 top-10  min-w-[8%]">
+              <AiFillCamera onClick={() => {
+                setMulti(false);
+                setModal(!modal);
+              }}
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-col flex-wrap gap-5 m-5 m-0 md:mx-20 h-[600px] overflow-scroll">
+        <div className="flex flex-col flex-wrap gap-5 m-5 m-0 md:mx-20 h-[600px] overflow-y-auto">
           <div className="flex flex-row ">
             <label className="w-2/6 font-bold">Restaurant name:</label>
             <h3 className="border-b w-4/6 focus:outline-none focus:border-purple-600 focus:border-b-2 transition-colors peer">
@@ -149,29 +159,33 @@ export default function Index() {
           <div className="flex flex-row  ">
             <label className="font-bold w-2/6">Cuisine type:</label>
             <h3 className="border-b w-4/6 focus:outline-none focus:border-purple-600 focus:border-b-2 transition-colors peer">
-              {" "}
-              {resData?.cuisineType}
+              <div>
+                {resData?.cuisineType?.length > 0
+                  ? resData?.cuisineType.join(", ")
+                  : "Please select at least one cuisine type"}
+              </div>
+
             </h3>
           </div>
           <div className="flex flex-row ">
-            <label className="font-bold w-2/6">Phone:</label>
+            <label className="font-bold w-2/6">Phone number:</label>
             <h3 className="border-b w-4/6 focus:outline-none focus:border-purple-600 focus:border-b-2 transition-colors peer">
               {" "}
               {resData?.contact?.phone}
             </h3>
           </div>
           <div className="flex flex-row ">
-            <label className="font-bold w-2/6">Facebook:</label>
+            <label className="font-bold w-2/6">Facebook link:</label>
             <h3 className="border-b w-4/6 focus:outline-none focus:border-purple-600 focus:border-b-2 transition-colors peer">
               {" "}
               {resData?.contact?.facebook}
             </h3>
           </div>
           <div className="flex flex-row ">
-            <label className="font-bold w-2/6">Instagram:</label>
+            <label className="font-bold w-2/6">Instagram link:</label>
             <h3 className="border-b focus:outline-none focus:border-purple-600 focus:border-b-2 transition-colors peer">
               {" "}
-              {resData?.contact?.Instagram}
+              {resData?.contact?.instagram}
             </h3>
           </div>
           <div className="flex flex-row ">
@@ -190,16 +204,14 @@ export default function Index() {
               <div className="flex flex-col">
                 <label className="font-bold">Mon-Fri:</label>
                 <h3 className="border-b focus:outline-none focus:border-purple-600 focus:border-b-2 transition-colors peer">
-                  {" "}
-                  {resData?.schedule?.weekday?.open}~{" "}
+                  {resData?.schedule?.weekday?.open}{" "}~{" "}
                   {resData?.schedule?.weekday?.close}
                 </h3>
               </div>
               <div className="flex flex-col">
                 <label className="font-bold">Weekend:</label>
                 <h3 className="border-b focus:outline-none focus:border-purple-600 focus:border-b-2 transition-colors peer">
-                  {" "}
-                  {resData?.schedule?.weekend?.open}~{" "}
+                  {resData?.schedule?.weekend?.open}{" "}~{" "}
                   {resData?.schedule?.weekend?.close}
                 </h3>
               </div>
@@ -209,7 +221,7 @@ export default function Index() {
             <label className="font-bold w-2/6">Last Update: </label>
             <h3 className="border-b w-4/6 focus:outline-none focus:border-purple-600 focus:border-b-2 transition-colors peer">
               {" "}
-              {resData?.updatedAt}
+              {resData?.updatedAt?.slice(0, 10)}
             </h3>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Utils from "@/utils/helper";
 
 export default function Login(): JSX.Element {
   const defUser = {
@@ -18,14 +19,14 @@ export default function Login(): JSX.Element {
 
   const SignIn = () => {
     axios
-      .post("http://localhost:8080/api/restaurantlogin", restaurant)
+      .post(`${Utils.API_URL}/restaurantlogin`, restaurant)
       .then(async (res) => {
         if (res.data.status) {
           localStorage.setItem("token", await res.data.token);
           localStorage.setItem("id", await res.data.data._id);
           setFailed(false);
           route.push("/dashboard");
-          console.log("amjilttai nevterlee");
+          alert("amjilttai nevterlee");
         } else {
           console.log("loggin failed");
           setFailed(true);
@@ -58,6 +59,7 @@ export default function Login(): JSX.Element {
               <input
                 className="w-full focus:outline-none"
                 placeholder="Email"
+                type='email'
                 value={restaurant.email}
                 onChange={(e) => {
                   setRestaurant({ ...restaurant, email: e.target.value });
@@ -68,11 +70,10 @@ export default function Login(): JSX.Element {
           <div className="flex justify-center">
             <div className="border rounded w-full md:w-2/3 lg:w-1/2  p-2 text-start">
               <input
-                className={`${
-                  failed
-                    ? "border-red-300 focus:outline-none"
-                    : "border-green-300 focus:outline-none"
-                } w-full`}
+                className={`${failed
+                  ? "border-red-300 focus:outline-none"
+                  : "border-green-300 focus:outline-none"
+                  } w-full`}
                 type="password"
                 placeholder="Password"
                 value={restaurant.password}

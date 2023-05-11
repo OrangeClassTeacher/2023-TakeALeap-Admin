@@ -21,11 +21,11 @@ export interface IRestaurant {
       comment?: string;
     }
   ];
-  cuisineType?: string[];
+  cuisineType: string[];
   contact?: {
     phone?: number;
     facebook?: string;
-    Instagram?: string;
+    instagram?: string;
     link?: string;
   };
   email?: string;

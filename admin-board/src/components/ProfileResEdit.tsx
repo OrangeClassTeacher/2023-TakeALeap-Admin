@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { IRestaurant } from "./Interface";
 import MapComponent from "./MapComponent";
+import { cuisines, locations } from "./enumValues";
+import Utils from "@/utils/helper";
 
 export const ProfileResEdit = ({
   modalShow,
@@ -39,9 +41,9 @@ export const ProfileResEdit = ({
     ],
     cuisineType: [],
     contact: {
-      phone: 0,
+      phone: 1,
       facebook: "",
-      Instagram: "",
+      instagram: "",
       link: "",
     },
     email: "",
@@ -58,14 +60,14 @@ export const ProfileResEdit = ({
   };
   const getData = () => {
     axios
-      .get(`http://localhost:8080/api/restaurant?id=${resId}`)
+      .get(`${Utils.API_URL}/restaurant?id=${resId}`)
       .then((res) => setResData(res.data.result))
       .catch((err) => console.log(err));
   };
 
   const editProfile = () => {
     axios
-      .put(`http://localhost:8080/api/restaurant?id=${resId}`, resData)
+      .put(`${Utils.API_URL}/restaurant?id=${resId}`, resData)
       .then((res) => {
         console.log(res.data.result);
         setResData(init);
@@ -143,15 +145,11 @@ export const ProfileResEdit = ({
                   }
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                   <option value={""}>Select</option>
-                  <option value={"Багануур"}>Багануур</option>
-                  <option value={"Багахангай"}>Багахангай</option>
-                  <option value={"Баянгол"}>Баянгол</option>
-                  <option value={"Баянзүрх"}>Баянзүрх</option>
-                  <option value={"Налайх"}>Налайх</option>
-                  <option value={"Сонгинохайрхан"}>Сонгинохайрхан</option>
-                  <option value={"Сүхбаатар"}>Сүхбаатар</option>
-                  <option value={"Хан-уул"}>Хан-уул</option>
-                  <option value={"Чингэлтэй"}>Чингэлтэй</option>
+                  {locations.map((item, ind) => {
+                    return (
+                      <option value={item} key={ind}>{item}</option>
+                    )
+                  })}
                 </select>
               </div>
               <div className="flex flex-col">
@@ -189,25 +187,45 @@ export const ProfileResEdit = ({
               <div className="flex flex-col">
                 <MapComponent setResData={setResData} resData={resData} />
               </div>
-              <div className="flex flex-col">
-                <label htmlFor="" className="text-gray-900 text-sm text-white">
-                  Cuisine type:
-                </label>
-                <select
-                  value={resData?.cuisineType[0]}
-                  onChange={(e) =>
-                    setResData({ ...resData, cuisineType: e.target.value })
-                  }
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <option value={""}>Select</option>
-                  <option value={"Other"}>Other</option>
-                  <option value={"Soup"}>Soup</option>
-                  <option value={"Main Course"}>Main Course</option>
-                  <option value={"Dessert"}>Dessert</option>
-                  <option value={"SetFood"}>SetFood</option>
-                  <option value={"Traditional"}>Traditional</option>
-                  <option value={"FastFood"}>FastFood</option>
-                </select>
+              <h4 className="text-white mb-2">Cuisine Type:</h4>
+              <div className="flex flex-row flex-wrap gap-3">
+                {cuisines.map((cuisine, index) => (
+                  <div key={index} className="flex items-center mr-4 mb-2">
+                    <input
+                      type="checkbox"
+                      id={`cuisine-${index}`}
+                      value={cuisine}
+                      checked={resData.cuisineType.includes(cuisine)}
+                      onChange={(e) => {
+                        const isChecked = e.target.checked;
+                        const cuisineType = e.target.value;
+                        setResData((prevState: any) => {
+                          if (isChecked) {
+                            return {
+                              ...prevState,
+                              cuisineType: [...prevState.cuisineType, cuisineType],
+                            };
+                          } else {
+                            return {
+                              ...prevState,
+                              cuisineType: prevState.cuisineType.filter(
+                                (c: any) => c !== cuisineType
+                              ),
+                            };
+                          }
+                        });
+                      }}
+                      className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor={`cuisine-${index}`}
+                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      {cuisine}
+                    </label>
+                  </div>
+                ))}
+
               </div>
               <div className="flex flex-col">
                 <label htmlFor="" className="text-gray-900 text-sm text-white">
@@ -215,27 +233,45 @@ export const ProfileResEdit = ({
                 </label>
                 <input
                   value={resData?.contact?.phone}
-                  onChange={(e) =>
-                    setResData({
-                      ...resData,
-                      contact: { ...resData.contact, phone: e.target.value },
-                    })
+                  onChange={(e) => {
+                    const inputVal = e.target.value
+                    if (inputVal.length !== 9) {
+                      setResData({
+                        ...resData,
+                        contact: { ...resData.contact, phone: e.target.value },
+                      })
+                    } else {
+                      alert('Utasnii dugaaraa zuw oruulna uu')
+                    }
                   }
-                  type="text"
+                  }
+                  minLength={8}
+                  max={8}
+                  type="number"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
               <div className="flex flex-col">
                 <label htmlFor="" className="text-gray-900 text-sm text-white">
-                  Facebook:
+                  Facebook link:
                 </label>
                 <input
                   value={resData?.contact?.facebook}
-                  onChange={(e) =>
-                    setResData({
-                      ...resData,
-                      contact: { ...resData.contact, facebook: e.target.value },
-                    })
+                  onChange={(e) => {
+                    const inputVal = e.target.value;
+                    const regex = /^(www\.)?facebook\.com/;
+                    if (regex.test(inputVal)) {
+                      setResData({
+                        ...resData,
+                        contact: {
+                          ...resData.contact,
+                          facebook: inputVal,
+                        },
+                      })
+                    } else {
+                      alert('The Facebook link is invalid. Please enter a link starting with "www.facebook.com".')
+                    }
+                  }
                   }
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -243,18 +279,25 @@ export const ProfileResEdit = ({
               </div>
               <div className="flex flex-col">
                 <label htmlFor="" className="text-gray-900 text-sm text-white">
-                  Instagram:
+                  Instagram link:
                 </label>
                 <input
-                  value={resData?.contact?.Instagram}
-                  onChange={(e) =>
-                    setResData({
-                      ...resData,
-                      contact: {
-                        ...resData.contact,
-                        Instagram: e.target.value,
-                      },
-                    })
+                  value={resData?.contact?.instagram}
+                  onChange={(e) => {
+                    const inputVal = e.target.value;
+                    const regex = /^(www\.)?instagram\.com/;
+                    if (regex.test(inputVal)) {
+                      setResData({
+                        ...resData,
+                        contact: {
+                          ...resData.contact,
+                          instagram: inputVal,
+                        },
+                      })
+                    } else {
+                      alert('The Instagram link is invalid. Please enter a link starting with "www.instagram.com".')
+                    }
+                  }
                   }
                   type="text"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -278,82 +321,113 @@ export const ProfileResEdit = ({
               </div>
               <div className="flex flex-col">
                 <label htmlFor="" className="text-gray-900 text-sm text-white">
-                  Weekday: OPEN~~~CLOSE
+                  Weekday: OPEN hour ~~~ CLOSE hour
                 </label>
                 <div className="flex">
                   <input
+                    type='number'
                     value={resData?.schedule?.weekday?.open}
-                    onChange={(e) =>
-                      setResData({
-                        ...resData,
-                        schedule: {
-                          ...resData?.schedule,
-                          weekday: {
-                            ...resData?.schedule?.weekday,
-                            open: e.target.value,
+                    max='24'
+                    min="2"
+                    onChange={(e) => {
+                      const inputVal = Number(e.target.value)
+                      if (inputVal > 0 && inputVal <= 24) {
+                        setResData({
+                          ...resData,
+                          schedule: {
+                            ...resData?.schedule,
+                            weekday: {
+                              ...resData?.schedule?.weekday,
+                              open: inputVal,
+                            },
                           },
-                        },
-                      })
+                        })
+                      } else {
+                        alert('tsagaa zuw oruulna uu')
+                      }
                     }
-                    type="text"
+                    }
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                   <input
                     value={resData?.schedule?.weekday?.close}
-                    onChange={(e) =>
-                      setResData({
-                        ...resData,
-                        schedule: {
-                          ...resData?.schedule,
-                          weekday: {
-                            ...resData?.schedule?.weekday,
-                            close: e.target.value,
+                    onChange={(e) => {
+                      const inputVal = Number(e.target.value)
+                      if (inputVal > 0 && inputVal <= 24) {
+                        setResData({
+                          ...resData,
+                          schedule: {
+                            ...resData?.schedule,
+                            weekday: {
+                              ...resData?.schedule?.weekday,
+                              close: inputVal,
+                            },
                           },
-                        },
-                      })
-                    }
-                    type="text"
+                        })
+                      } else {
+                        alert('tsagaa zuw oruulna uu')
+                      }
+                    }}
+                    type="number"
+                    max='24'
+                    min="1"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                 </div>
               </div>
               <div className="flex flex-col">
                 <label htmlFor="" className="text-gray-900 text-sm text-white">
-                  Weekend:
+                  Weekend: OPEN hour ~~~ CLOSE hour
                 </label>
                 <div className="flex">
                   <input
+                    type="number"
+                    max='24'
+                    min="1"
                     value={resData?.schedule?.weekend?.open}
-                    onChange={(e) =>
-                      setResData({
-                        ...resData,
-                        schedule: {
-                          ...resData?.schedule,
-                          weekend: {
-                            ...resData?.schedule?.weekend,
-                            open: e.target.value,
+                    onChange={(e) => {
+                      const inputVal = Number(e.target.value)
+                      if (inputVal > 0 && inputVal <= 24) {
+                        setResData({
+                          ...resData,
+                          schedule: {
+                            ...resData?.schedule,
+                            weekend: {
+                              ...resData?.schedule?.weekend,
+                              open: inputVal,
+                            },
                           },
-                        },
-                      })
+                        })
+                      } else {
+                        alert('tsagaa zuw oruulna uu')
+                      }
                     }
-                    type="text"
+                    }
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                   <input
                     value={resData?.schedule?.weekend?.close}
-                    onChange={(e) =>
-                      setResData({
-                        ...resData,
-                        schedule: {
-                          ...resData?.schedule,
-                          weekend: {
-                            ...resData?.schedule?.weekend,
-                            close: e.target.value,
+                    onChange={(e) => {
+                      const inputVal = Number(e.target.value)
+                      if (inputVal > 0 && inputVal <= 24) {
+                        setResData({
+                          ...resData,
+                          schedule: {
+                            ...resData?.schedule,
+                            weekend: {
+                              ...resData?.schedule?.weekend,
+                              close: inputVal,
+                            },
                           },
-                        },
-                      })
+                        })
+                      } else {
+                        alert('tsagaa zuw oruulna uu')
+                      }
                     }
-                    type="text"
+                    }
+                    type="number"
+                    max='24'
+                    min="1"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                 </div>
