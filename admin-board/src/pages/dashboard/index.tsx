@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { IDashboard } from "../../components/Interface";
 import { Header } from "@/components/Header";
 import Image from "next/image";
 import { Dna } from "react-loader-spinner";
 import { BiTime, BiCommentDetail } from 'react-icons/bi'
 import Utils from "@/utils/helper";
+import { IDashboard } from "@/components/Interface";
 
 export default function Index(): JSX.Element {
 
@@ -26,6 +26,7 @@ export default function Index(): JSX.Element {
         .finally(() => setLoading(false))
     }
   }, []);
+
   if (loading) return <div className="flex justify-center items-center h-screen w-full">
     <Dna
       visible={true}
@@ -45,12 +46,14 @@ export default function Index(): JSX.Element {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div className="bg-white rounded-lg p-10">
           <p className="text-black">
-            {resData?.resRate[0]?.avg_score}
+            {/* {resData?.resRate.avg_score.l ? "No Data here" : resData?.resRate.avg_score} */}
+            No Data here
           </p>
         </div>
         <div className="bg-white rounded-lg p-10">
           <p className="text-black">
-            {resData?.foodRate[0]?.avg_rate}
+            No Data here
+            {/* {resData?.foodRate?.avg_rate} */}
           </p>
         </div>
         <div className="bg-white rounded-lg p-10">Last week</div>

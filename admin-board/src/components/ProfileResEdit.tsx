@@ -31,14 +31,6 @@ export const ProfileResEdit = ({
         coordinates: [],
       },
     },
-    restaurantRate: [
-      {
-        rateType: "",
-        userId: "",
-        score: 0,
-        comment: "",
-      },
-    ],
     cuisineType: [],
     contact: {
       phone: 1,
