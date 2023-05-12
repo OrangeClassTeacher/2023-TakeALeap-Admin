@@ -5,9 +5,10 @@ import Image from "next/image";
 import logo from "../../assets/defaultavatar.jpeg";
 import { ProfileResEdit } from "@/components/ProfileResEdit";
 import { UploadModal } from "@/components/UploadModal";
-// import { Map } from "@/components/Map";
+import { Map } from "@/components/Map";
 import { AiFillCamera } from 'react-icons/ai'
-import MapComponent from "@/components/MapComponent";
+// import MapComponent from "@/components/MapComponent";
+
 import Utils from "@/utils/helper";
 
 export default function Index() {
@@ -25,14 +26,6 @@ export default function Index() {
         coordinates: [],
       },
     },
-    restaurantRate: [
-      {
-        rateType: "",
-        userId: "",
-        score: 0,
-        comment: "",
-      },
-    ],
     cuisineType: [],
     contact: {
       phone: 0,
@@ -65,10 +58,10 @@ export default function Index() {
         .get(`${Utils.API_URL}/restaurant?id=${resId}`)
         .then((res) => {
           setResData({ ...res.data.result, token: token ? token : "" });
+          console.log(res.data.result);
         })
         .catch((err) => console.log(err));
     }
-    console.log(resData);
   }, []);
 
   return (
@@ -99,21 +92,23 @@ export default function Index() {
               }} />
             </div>
           </div>
-          <div className="flex flex-col relative w-2/6">
-            <Image
-              className="rounded-full absolute -bottom-20 left-20 border w-[200px] h-[200px] object-cover"
-              src={resData?.logoImg ? resData?.logoImg : logo}
-              alt="food"
-              width={200}
-              height={200}
-              priority={true}
-            />
-            <div className="rounded-full bg-gray-300 hover:bg-gray-400 active:bg-gray-500 focus:outline-none focus:ring focus:ring-gray-300  p-2 absolute right-32 top-10  min-w-[8%]">
-              <AiFillCamera onClick={() => {
-                setMulti(false);
-                setModal(!modal);
-              }}
+          <div className="flex flex-col absolute w-2/6 -bottom-16 left-10">
+            <div className="relative w-3/5 ">
+              <Image
+                className="rounded-full  -bottom-20 left-20 border w-[200px] max-h-[200px] object-cover"
+                src={resData?.logoImg ? resData?.logoImg : logo}
+                alt="food"
+                width={200}
+                height={200}
+                priority={true}
               />
+              <div className="p-2 absolute right-0 bottom-10  min-w-[8%] rounded-full bg-gray-300 hover:bg-gray-400 active:bg-gray-500 focus:outline-none focus:ring focus:ring-gray-300">
+                <AiFillCamera onClick={() => {
+                  setMulti(false);
+                  setModal(!modal);
+                }}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -196,7 +191,7 @@ export default function Index() {
             </h3>
           </div>
           <div className="flex flex-row ">
-            <MapComponent resData={resData} setResData={setResData} />
+            {resData._id && (<Map resData={resData} setResData={setResData} />)}
           </div>
           <div className="flex gap-5 w-full">
             <h3 className="font-bold w-2/6">Schedule:</h3>

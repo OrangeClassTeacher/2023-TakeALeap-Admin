@@ -13,14 +13,6 @@ export interface IRestaurant {
       coordinates: number[];
     };
   };
-  restaurantRate?: [
-    {
-      rateType?: string;
-      userId?: string;
-      score?: number;
-      comment?: string;
-    }
-  ];
   cuisineType: string[];
   contact?: {
     phone?: number;
@@ -73,38 +65,36 @@ export interface IResImg {
 
 
 export interface IDashboard {
-  status: boolean;
-  data: {
-    foodRate: {
-      _id: string;
-      avg_rate: number;
-    };
-    latestComms: {
-      _id: string;
-      restaurantId: string;
-      foodId: string;
-      comment: string;
-      createdAt: string;
-    }[];
-    resRate: {
-      _id: string;
-      avg_score: number;
-    };
-    topFood: {
-      foodId: string;
-      food: {
-        _id: string;
-        foodName: string;
-        restaurantId: string;
-        price: number;
-        foodType: string;
-        img: string[];
-        ingredients: string[];
-        createdAt: string;
-        updatedAt: string;
-        __v: number;
-      };
-      avg_rate: number;
-    }[];
+  foodRate: {
+    _id: string;
+    avg_rate: number;
   };
+  latestComms: {
+    _id: string;
+    restaurantId: string;
+    foodId: string;
+    comment: string;
+    createdAt: string;
+  }[];
+  resRate: {
+    _id: string;
+    avg_score: number;
+  };
+  topFood: {
+    foodId: string;
+    food: {
+      _id: string;
+      foodName: string;
+      restaurantId: string;
+      price: number;
+      foodType: string;
+      img: string[];
+      ingredients: string[];
+      createdAt: string;
+      updatedAt: string;
+      __v: number;
+    };
+    avg_rate: number;
+  }[];
+
 }
