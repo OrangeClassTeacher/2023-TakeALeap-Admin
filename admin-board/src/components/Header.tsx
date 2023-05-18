@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { IRestaurant } from "./Interface";
+import { IRestaurant } from "./Interface/Interface";
 import Image from "next/image";
+import Utils from "@/utils/helper";
 
 export const Header = ({ board }: { board: string }) => {
   const resId = typeof window !== "undefined" ? localStorage.getItem("id") : "";
@@ -10,7 +11,7 @@ export const Header = ({ board }: { board: string }) => {
   useEffect(() => {
     if (resId) {
       axios
-        .get(`http://localhost:8080/api/restaurant?id=${resId}`)
+        .get(`${Utils.API_URL}/restaurantadmin?id=${resId}`)
         .then((res) => setResDate(res.data.result))
         .catch((err) => console.log(err));
     }

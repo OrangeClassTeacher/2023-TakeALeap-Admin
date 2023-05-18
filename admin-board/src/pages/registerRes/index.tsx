@@ -43,11 +43,11 @@ export default function Register(): JSX.Element {
 
   const signUp = () => {
     console.log("function");
-
+    const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/
     if (newUser.email && newUser.password && newUser.restaurantName) {
-      if (newUser.email.includes("@gmail.com")) {
+      if (emailRegex.test(newUser.email)) {
         axios
-          .post(`${Utils.API_URL}/restaurant`, newUser)
+          .post(`${Utils.API_URL}/createrestaurant`, newUser)
           .then(async (res) => {
             if (res.data.status) {
               setNewUser(defRes);
