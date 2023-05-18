@@ -5,7 +5,8 @@ import Image from "next/image";
 import { Dna } from "react-loader-spinner";
 import { BiTime, BiCommentDetail } from 'react-icons/bi'
 import Utils from "@/utils/helper";
-import { IDashboard } from "@/components/Interface";
+import { IDashboard } from "@/components/Interface/Interface";
+import { AiOutlineArrowUp } from "react-icons/ai";
 
 export default function Index(): JSX.Element {
 
@@ -27,6 +28,7 @@ export default function Index(): JSX.Element {
     }
   }, []);
 
+
   if (loading) return <div className="flex justify-center items-center h-screen w-full">
     <Dna
       visible={true}
@@ -45,22 +47,38 @@ export default function Index(): JSX.Element {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div className="bg-white rounded-lg p-10">
-          <p className="text-black">
-            {/* {resData?.resRate.avg_score.l ? "No Data here" : resData?.resRate.avg_score} */}
-            No Data here
-          </p>
+          <h1 className="text-lg">Restaurant Rate</h1>
+          <div className="flex">
+
+            <p className="text-black text-lg">
+              {resData?.resRate?.currentAvgRateRes[0]?.avg_rate ? resData?.resRate?.currentAvgRateRes[0]?.avg_rate : "No Data"}
+            </p>
+            <span>
+              {resData?.resRate?.currentAvgRateRes?.[0]?.avg_rate && resData?.resRate?.previousAvgRateRes?.[0]?.avg_rate &&
+                resData?.resRate?.currentAvgRateRes[0]?.avg_rate - resData?.resRate?.previousAvgRateRes[0]?.avg_rate > 0 ? <AiOutlineArrowUp /> : <AiOutlineArrowUp style={{ transform: "rotate(180deg)" }} />}
+            </span>
+          </div>
         </div>
         <div className="bg-white rounded-lg p-10">
-          <p className="text-black">
-            No Data here
-            {/* {resData?.foodRate?.avg_rate} */}
-          </p>
+          <h1 className="text-lg">Food Rate of Restaurant</h1>
+          <div className="flex">
+
+            <p className="text-black text-lg">
+              {resData?.foodRate?.currentAvgRateFood[0]?.avg_rate ? resData?.foodRate?.currentAvgRateFood[0]?.avg_rate : "No Data"}
+            </p>
+            <span>
+              {resData?.foodRate?.currentAvgRateFood?.[0]?.avg_rate && resData?.foodRate?.previousAvgRateFood?.[0]?.avg_rate &&
+                resData?.foodRate?.currentAvgRateFood[0]?.avg_rate - resData?.foodRate?.previousAvgRateFood[0]?.avg_rate > 0 ? <AiOutlineArrowUp /> : <AiOutlineArrowUp style={{ transform: "rotate(180deg)" }} />}
+            </span>
+          </div>
         </div>
         <div className="bg-white rounded-lg p-10">Last week</div>
       </div>
       <div className="bg-white rounded-lg my-10 p-10 min-h-[400px] overflow-y-scroll">
+
+        <h1>Latest comments</h1>
         {
-          resData?.latestComms.map((item: any, index: any) => {
+          resData?.latestComments?.map((item: any, index: any) => {
             const dateObj = new Date(item.createdAt);
             const formattedDate = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`
             const hours = dateObj.getHours();
@@ -95,7 +113,7 @@ export default function Index(): JSX.Element {
       </div>
       <div className="flex gap-2 bg-white border-2 rounded-lg my-10 p-10">
         {
-          resData?.topFood.map((item: any, index: any) => {
+          resData?.topFoods.map((item: any, index: any) => {
 
             return (
               <div key={index}>

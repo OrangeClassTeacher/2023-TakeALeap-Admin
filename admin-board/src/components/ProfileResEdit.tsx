@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { IRestaurant } from "./Interface";
+import { IRestaurant } from "./Interface/Interface";
 import MapComponent from "./MapComponent";
-import { cuisines, locations } from "./enumValues";
+import { cuisines, locations } from "./EnumValue/enumValues";
 import Utils from "@/utils/helper";
 
 export const ProfileResEdit = ({
@@ -52,14 +52,14 @@ export const ProfileResEdit = ({
   };
   const getData = () => {
     axios
-      .get(`${Utils.API_URL}/restaurant?id=${resId}`)
+      .get(`${Utils.API_URL}/restaurantadmin?id=${resId}`)
       .then((res) => setResData(res.data.result))
       .catch((err) => console.log(err));
   };
 
   const editProfile = () => {
     axios
-      .put(`${Utils.API_URL}/restaurant?id=${resId}`, resData)
+      .put(`${Utils.API_URL}/updaterestaurant?id=${resId}`, resData)
       .then((res) => {
         console.log(res.data.result);
         setResData(init);
@@ -251,7 +251,7 @@ export const ProfileResEdit = ({
                   value={resData?.contact?.facebook}
                   onChange={(e) => {
                     const inputVal = e.target.value;
-                    const regex = /^(www\.)?facebook\.com/;
+                    const regex = /^(www\.)?facebook\.com/ || /^facebook\.com/;
                     if (regex.test(inputVal)) {
                       setResData({
                         ...resData,

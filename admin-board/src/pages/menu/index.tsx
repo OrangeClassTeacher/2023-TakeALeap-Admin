@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { FoodsMenu } from "@/components/FoodsMenu";
-import { BeverageMenu } from "@/components/BeverageMenu";
+import { FoodsMenu } from "@/components/Food/FoodsMenu";
+import { BeverageMenu } from "@/components/Beverage/BeverageMenu";
 import axios from "axios";
-import { IFood } from "@/components/Interface";
-import { IBeverage } from "@/components/Interface";
+import { IFood } from "@/components/Interface/Interface";
+import { IBeverage } from "@/components/Interface/Interface";
 import { Header } from "@/components/Header";
 import Utils from "@/utils/helper";
 
@@ -16,14 +16,14 @@ export default function Index() {
       typeof window !== "undefined" ? localStorage.getItem("id") : "";
     if (resId) {
       axios
-        .get(`${Utils.API_URL}/restaurantfoods?id=${resId}`)
+        .get(`${Utils.API_URL}/foodbyrestaurantid?id=${resId}`)
         .then((res) => {
           setGetFood(res.data.result);
         })
         .catch((err) => console.log(err));
 
       axios
-        .get(`${Utils.API_URL}/getrestaurantbeverages?id=${resId}`)
+        .get(`${Utils.API_URL}/beveragesbyrestaurantid?id=${resId}`)
         .then((res) => {
           setGetBeverages(res.data.result);
         })

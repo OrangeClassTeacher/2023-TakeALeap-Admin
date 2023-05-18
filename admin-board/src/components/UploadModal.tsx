@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { IRestaurant } from './Interface'
+import { IRestaurant } from './Interface/Interface'
 import { InfinitySpin } from 'react-loader-spinner'
 import Utils from '@/utils/helper'
 
@@ -25,7 +25,7 @@ export const UploadModal = ({
 
     const getData = () => {
         setLoading(true)
-        axios.get(`${Utils.API_URL}/restaurant?id=${resId}`)
+        axios.get(`${Utils.API_URL}/restaurantadmin?id=${resId}`)
             .then((res) => {
                 setResData(res.data.result)
             }
@@ -39,7 +39,7 @@ export const UploadModal = ({
         const fileSend = typeImg == "img" ? { img: imgSave, token: token } : { logoImg: imgSave[0], token: token }
 
         axios
-            .put(`${Utils.API_URL}/restaurant?id=${resId}`, fileSend)
+            .put(`${Utils.API_URL}/updaterestaurant?id=${resId}`, fileSend)
             .then((res) => {
                 console.log(res.data.status);
                 res.data.status ? getData() : alert("failed")

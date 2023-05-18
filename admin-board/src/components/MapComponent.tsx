@@ -1,6 +1,6 @@
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { useState } from "react";
-import { IRestaurant } from "./Interface";
+import { IRestaurant } from "./Interface/Interface";
 
 
 export default function MapComponent({ setResData, resData }: { resData: IRestaurant, setResData: any }) {
@@ -45,11 +45,11 @@ export default function MapComponent({ setResData, resData }: { resData: IRestau
                     if (!choose) {
                         setStartCoordinates({ x: e.latLng?.lat(), y: e.latLng?.lng() });
                         setResData({
-                            ...resData, address: { ...resData.address, location: { ...resData.address.location, coordinates: [...resData.address.location.coordinates, e.latLng?.lat(), e.latLng?.lng()] } }
+                            ...resData, address: { ...resData.address, location: { ...resData.address.location, coordinates: [e.latLng?.lat(), e.latLng?.lng()] } }
                         })
                     }
                 }}
-                zoom={13}
+                zoom={12}
                 center={{ lat: 47.918397396512695, lng: 106.9179234683272 }}
                 mapContainerClassName="map-container"
             >
