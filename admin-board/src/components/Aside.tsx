@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import logo from "../assets/logo.png";
+import logo from "../assets/dream_TradingCard_1.jpg";
 import Link from "next/link";
 import { MdLeaderboard } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
@@ -12,11 +12,11 @@ export const Aside = () => {
   const route = useRouter();
 
   return (
-    <div className="bg-white border rounded-lg p-10 flex flex-col gap-5 m-5">
+    <div className="bg-white border fixed w-[15%] h-[95%] rounded-lg p-10 flex flex-col gap-5 m-5">
       <div className="border-b-2 pb-4">
-        <Image src={logo} alt="logo" width={300} />
+        <Image src={logo} alt="logo" width={300} className="rounded-full object-contain h-[150px] w-[150px]" />
       </div>
-      <div className="flex flex-col justify-between gap-[300px]">
+      <div className="flex flex-col justify-between h-full">
         <div className=" flex flex-col gap-5">
           <Link
             href="/dashboard"

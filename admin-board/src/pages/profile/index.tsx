@@ -60,7 +60,7 @@ export default function Index() {
         })
         .catch((err) => console.log(err));
     }
-  }, []);
+  }, [resId, token]);
 
   return (
     <div className="">
@@ -74,11 +74,12 @@ export default function Index() {
       </div>
       <div className="bg-white border rounded-lg w-6/6 h-full gap-5 m-5 p-5">
         <ImageProfile
+          modal={modal}
           resData={resData}
           setModal={setModal}
           setMulti={setMulti}
         />
-        <ProfileInfo resData={resData} setResData={setResData} />
+        <ProfileInfo resData={resData} />
 
         <button
           className="rounded-full bg-yellow-500 text-white p-2 m-5"

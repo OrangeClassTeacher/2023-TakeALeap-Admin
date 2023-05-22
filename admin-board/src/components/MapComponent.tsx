@@ -43,7 +43,10 @@ export default function MapComponent({ setResData, resData }: { resData: IRestau
                 options={{ draggableCursor: cursorType }}
                 onClick={(e) => {
                     if (!choose) {
-                        setStartCoordinates({ x: e.latLng?.lat(), y: e.latLng?.lng() });
+                        setStartCoordinates({
+                            x: e.latLng?.lat().toString() || "",
+                            y: e.latLng?.lng().toString() || ""
+                        })
                         setResData({
                             ...resData, address: { ...resData.address, location: { ...resData.address.location, coordinates: [e.latLng?.lat(), e.latLng?.lng()] } }
                         })

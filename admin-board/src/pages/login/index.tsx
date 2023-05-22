@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { BiArrowBack } from "react-icons/bi";
 import { FaFacebookF } from "react-icons/fa";
@@ -36,7 +36,7 @@ export default function Login(): JSX.Element {
       .catch((err) => {
         setFailed(true);
         setRestaurant(defUser);
-        console.log("login failed");
+        console.log(err);
       });
   };
 

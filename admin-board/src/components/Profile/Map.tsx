@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { GoogleMap, MarkerF, InfoWindowF, useLoadScript } from "@react-google-maps/api";
+import React from "react";
+import { GoogleMap, MarkerF, useLoadScript } from "@react-google-maps/api";
 import { Dna } from "react-loader-spinner";
 import { IRestaurant } from "../Interface/Interface";
 
-export const Map = ({ resData, setResData }: { resData: IRestaurant, setResData: any }) => {
+export const Map = ({ resData }: { resData: IRestaurant }) => {
 
     const mapStyle = {
         borderRadius: '20px',

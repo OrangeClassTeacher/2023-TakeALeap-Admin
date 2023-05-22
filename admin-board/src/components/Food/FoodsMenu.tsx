@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IFood } from "../Interface/Interface";
 import Image from "next/image";
 import axios from "axios";

@@ -15,7 +15,7 @@ export const Header = ({ board }: { board: string }) => {
         .then((res) => setResDate(res.data.result))
         .catch((err) => console.log(err));
     }
-  }, []);
+  }, [resId]);
 
   const months = [
     "January",
