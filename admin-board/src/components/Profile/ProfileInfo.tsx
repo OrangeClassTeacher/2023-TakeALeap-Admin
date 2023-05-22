@@ -1,7 +1,7 @@
 import React from 'react'
 import { Map } from './Map'
 
-export default function ProfileInfo({ resData, setResData }: { resData: any, setResData: any }) {
+export default function ProfileInfo({ resData }: { resData: any }) {
     return (
         <div className="flex flex-col flex-wrap gap-5 m-5 m-0 md:mx-20 h-[600px] overflow-y-auto">
             <div className="flex flex-row ">
@@ -108,7 +108,7 @@ export default function ProfileInfo({ resData, setResData }: { resData: any, set
                 </h3>
             </div>
             <div className="flex flex-row ">
-                {resData._id && (<Map resData={resData} setResData={setResData} />)}
+                {resData._id && (<Map resData={resData} />)}
             </div>
         </div>
     )

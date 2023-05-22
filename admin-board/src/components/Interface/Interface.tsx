@@ -1,4 +1,3 @@
-import { Token } from "typescript";
 
 export interface IRestaurant {
   _id?: string;
@@ -116,3 +115,8 @@ export interface IDashboard {
   }[];
 
 }
+
+export interface IDashboardMonthly {
+  _id: string,
+  avg_rate: number,
+}[]

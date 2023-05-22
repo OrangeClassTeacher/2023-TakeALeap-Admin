@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { IRestaurant } from "./Interface/Interface";
 import MapComponent from "./MapComponent";
 import { cuisines, locations } from "./EnumValue/enumValues";

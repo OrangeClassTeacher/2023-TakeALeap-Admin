@@ -1,11 +1,10 @@
-import modal from 'flowbite/lib/esm/components/modal';
 import React, { useState } from 'react'
 import { AiFillCamera } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
 import logo from "../../assets/defaultavatar.jpeg"
 import Image from 'next/image';
 
-export default function ImageProfile({ resData, setMulti, setModal }: { resData: any, setMulti: any, setModal: any }) {
+export default function ImageProfile({ resData, setMulti, modal, setModal }: { resData: any, setMulti: any, modal: any, setModal: any }) {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
 
