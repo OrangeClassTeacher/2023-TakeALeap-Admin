@@ -6,6 +6,7 @@ import { UploadModal } from "@/components/UploadModal";
 import Utils from "@/utils/helper";
 import ImageProfile from "@/components/Profile/ImageProfile";
 import ProfileInfo from "@/components/Profile/ProfileInfo";
+import { toast } from "react-toastify";
 
 
 export default function Index() {
@@ -58,7 +59,7 @@ export default function Index() {
           setResData({ ...res.data.result, token: token ? token : "" });
           console.log(res.data.result);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => toast('Failed to get data'));
     }
   }, [resId, token]);
 

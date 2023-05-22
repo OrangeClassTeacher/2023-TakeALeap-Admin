@@ -5,6 +5,7 @@ import axios from "axios";
 import BevMenuModal from "./BevMenuModal";
 import { useRouter } from "next/router";
 import Utils from "@/utils/helper";
+import { toast } from "react-toastify";
 
 export const BeverageMenu = ({
   getBeverages,
@@ -40,7 +41,7 @@ export const BeverageMenu = ({
         setGetBeverages({ ...res.data.result, token: token });
       })
       .catch((err) => {
-        console.log(err);
+        toast('Failed to get beverage data');
       });
   };
 
@@ -52,7 +53,7 @@ export const BeverageMenu = ({
           res.data.status ? (alert("succes"), getData()) : alert("Try agian");
         })
         .catch((err) => {
-          console.log(err);
+          toast('Failed to delete');
         });
     }
   };
@@ -61,7 +62,7 @@ export const BeverageMenu = ({
     await axios
       .get(`${Utils.API_URL}/beverage?id=${id}`)
       .then((res) => setBeverage({ ...res.data.result, token: token }))
-      .catch((err) => console.log(err));
+      .catch((err) => toast('Failed to get beverage'));
 
     route.push(`/menu?id=${id}`);
     setModal(true);
@@ -96,14 +97,6 @@ export const BeverageMenu = ({
                     height={300}
                     priority={false}
                   />}
-                {/* <Image
-                  className="rounded-lg object-cover"
-                  src={item.img[0]}
-                  alt={item.beverageName}
-                  width={200}
-                  height={300}
-                  priority={false}
-                /> */}
                 <div className="p-1 flex flex-col justify-between ms-2">
                   <div className="flex flex-col gap-1">
                     <h4> Name: {item?.beverageName}</h4>

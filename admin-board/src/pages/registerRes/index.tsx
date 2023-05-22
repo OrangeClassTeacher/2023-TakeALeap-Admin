@@ -4,6 +4,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Utils from "@/utils/helper";
+import { toast } from "react-toastify";
 
 export default function Register(): JSX.Element {
   const defRes = {
@@ -42,7 +43,7 @@ export default function Register(): JSX.Element {
   const route = useRouter();
 
   const signUp = () => {
-    console.log("function");
+
     const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/
     if (newUser.email && newUser.password && newUser.restaurantName) {
       if (emailRegex.test(newUser.email)) {
@@ -51,20 +52,20 @@ export default function Register(): JSX.Element {
           .then(async (res) => {
             if (res.data.status) {
               setNewUser(defRes);
-              alert("successfully created an acount please sign in");
+              toast('Successfully created an acount please sign in')
               route.push("/");
             } else {
-              console.log("burtgel amjiltgu bolloo");
+              toast('Failed to create an account')
             }
           })
           .catch((err) => {
-            console.log("Axios aldaa garlaa", err);
+            toast("Axios error", err);
           });
       } else {
-        alert("Emailee shalgaarai");
+        toast("Please check email");
       }
     } else {
-      console.log("Medeellee buren buglunu vv");
+      toast("Please fill your information completely");
     }
   };
 

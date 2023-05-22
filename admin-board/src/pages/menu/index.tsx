@@ -6,6 +6,7 @@ import { IFood } from "@/components/Interface/Interface";
 import { IBeverage } from "@/components/Interface/Interface";
 import { Header } from "@/components/Header";
 import Utils from "@/utils/helper";
+import { toast } from "react-toastify";
 
 export default function Index() {
   const [getFood, setGetFood] = useState<IFood[]>([]);
@@ -20,7 +21,7 @@ export default function Index() {
         .then((res) => {
           setGetFood(res.data.result);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => toast('Failed to get food data'));
 
       axios
         .get(`${Utils.API_URL}/beveragesbyrestaurantid?id=${resId}`)
@@ -28,7 +29,7 @@ export default function Index() {
           setGetBeverages(res.data.result);
         })
         .catch((err) => {
-          console.log(err);
+          toast('Failed to get beverage data');
         });
     }
   }, []);
