@@ -6,6 +6,7 @@ import FoodImgUpload from "./FoodImgUpload";
 import { IoMdClose } from "react-icons/io";
 import Utils from "@/utils/helper";
 import { meal } from "../EnumValue/enumValues";
+import { toast } from "react-toastify";
 
 export default function FoodMenuModal({
   modal,
@@ -32,7 +33,7 @@ export default function FoodMenuModal({
       .then((res) => {
         setGetFood(res.data.result);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast('Failed to get foods'));
   };
 
   const addFood = async () => {
@@ -44,7 +45,7 @@ export default function FoodMenuModal({
           route.push("/menu");
         })
         .catch((err) => {
-          console.log(err);
+          toast('Failed to update food');
         })
       : await axios
         .post(`${Utils.API_URL}/createfood`, foods)
@@ -52,7 +53,7 @@ export default function FoodMenuModal({
           res.data.status ? getData() : alert(res.data.message);
         })
         .catch((err) => {
-          console.log(err);
+          toast('Failed to create food');
         });
     setFood({});
     setModal(false);

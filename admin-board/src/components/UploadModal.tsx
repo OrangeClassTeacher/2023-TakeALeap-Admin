@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { IRestaurant } from './Interface/Interface'
 import { InfinitySpin } from 'react-loader-spinner'
 import Utils from '@/utils/helper'
+import { toast } from 'react-toastify'
 
 
 export const UploadModal = ({
@@ -30,7 +31,7 @@ export const UploadModal = ({
                 setResData(res.data.result)
             }
             )
-            .catch((err) => console.log(err)
+            .catch((err) => toast('Failed to get data from api')
             )
         setLoading(false)
     }
@@ -41,12 +42,11 @@ export const UploadModal = ({
         axios
             .put(`${Utils.API_URL}/updaterestaurant?id=${resId}`, fileSend)
             .then((res) => {
-                console.log(res.data.status);
-                res.data.status ? getData() : alert("failed")
+                res.data.status ? getData() : toast("failed")
 
             })
             .catch((err) => {
-                console.log(err)
+                toast('Failed to update image')
             })
         setImgSave([])
     }

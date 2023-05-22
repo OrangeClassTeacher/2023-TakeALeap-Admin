@@ -4,6 +4,7 @@ import { IRestaurant } from "./Interface/Interface";
 import MapComponent from "./MapComponent";
 import { cuisines, locations } from "./EnumValue/enumValues";
 import Utils from "@/utils/helper";
+import { toast } from "react-toastify";
 
 export const ProfileResEdit = ({
   modalShow,
@@ -54,19 +55,19 @@ export const ProfileResEdit = ({
     axios
       .get(`${Utils.API_URL}/restaurantadmin?id=${resId}`)
       .then((res) => setResData(res.data.result))
-      .catch((err) => console.log(err));
+      .catch((err) => toast('Failed to get datas from API'));
   };
 
   const editProfile = () => {
     axios
       .put(`${Utils.API_URL}/updaterestaurant?id=${resId}`, resData)
       .then((res) => {
-        console.log(res.data.result);
+        toast('Successfully edited')
         setResData(init);
         getData();
       })
       .catch((err) => {
-        console.log(err);
+        toast('Editing failed')
       });
   };
 
@@ -224,6 +225,7 @@ export const ProfileResEdit = ({
                   Phone:
                 </label>
                 <input
+                  defaultValue={''}
                   value={resData?.contact?.phone}
                   onChange={(e) => {
                     const inputVal = e.target.value
@@ -233,7 +235,7 @@ export const ProfileResEdit = ({
                         contact: { ...resData.contact, phone: e.target.value },
                       })
                     } else {
-                      alert('Utasnii dugaaraa zuw oruulna uu')
+                      toast('Utasnii dugaaraa zuw oruulna uu')
                     }
                   }
                   }
@@ -317,6 +319,7 @@ export const ProfileResEdit = ({
                 </label>
                 <div className="flex">
                   <input
+                    defaultValue={''}
                     type='number'
                     value={resData?.schedule?.weekday?.open}
                     max='24'
@@ -335,7 +338,7 @@ export const ProfileResEdit = ({
                           },
                         })
                       } else {
-                        alert('tsagaa zuw oruulna uu')
+                        toast('Please fill your work hour correctly')
                       }
                     }
                     }
@@ -357,12 +360,13 @@ export const ProfileResEdit = ({
                           },
                         })
                       } else {
-                        alert('tsagaa zuw oruulna uu')
+                        toast('Please fill your work hour correctly')
                       }
                     }}
                     type="number"
                     max='24'
                     min="1"
+                    defaultValue={''}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                 </div>
@@ -373,6 +377,7 @@ export const ProfileResEdit = ({
                 </label>
                 <div className="flex">
                   <input
+                    defaultValue={''}
                     type="number"
                     max='24'
                     min="1"
@@ -391,13 +396,14 @@ export const ProfileResEdit = ({
                           },
                         })
                       } else {
-                        alert('tsagaa zuw oruulna uu')
+                        toast('Please fill your work hour correctly')
                       }
                     }
                     }
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                   <input
+                    defaultValue={''}
                     value={resData?.schedule?.weekend?.close}
                     onChange={(e) => {
                       const inputVal = Number(e.target.value)
@@ -413,7 +419,7 @@ export const ProfileResEdit = ({
                           },
                         })
                       } else {
-                        alert('tsagaa zuw oruulna uu')
+                        toast('Please fill your work hour correctly')
                       }
                     }
                     }
@@ -425,7 +431,7 @@ export const ProfileResEdit = ({
                 </div>
               </div>
             </div>
-            {/* <!-- Modal footer --> */}
+
             <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
               <button
                 onClick={() => {

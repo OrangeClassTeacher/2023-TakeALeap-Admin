@@ -6,6 +6,7 @@ import { IoMdClose } from "react-icons/io";
 import BevImgUpload from "./BevImgUpload";
 import Utils from "@/utils/helper";
 import { drinks } from "../EnumValue/enumValues";
+import { toast } from "react-toastify";
 
 export default function BevMenuModal({
   modal,
@@ -28,7 +29,7 @@ export default function BevMenuModal({
     await axios
       .get(`${Utils.API_URL}/beveragesbyrestaurantid?id=${resId}`)
       .then((res) => setGetBeverages(res.data.result))
-      .catch((err) => console.log(err));
+      .catch((err) => toast('Failed to get beverages of restaurant'));
   };
 
   const addBeverage = async () => {
@@ -40,12 +41,12 @@ export default function BevMenuModal({
           route.push("/menu");
         })
         .catch((err) => {
-          console.log(err);
+          toast('Failed to update');
         })
       : await axios
         .post(`${Utils.API_URL}/createbeverages`, beverages)
         .then((res) => {
-          res.data.status ? getData() : alert("try again");
+          res.data.status ? getData() : toast("try again");
         })
         .catch((err) => {
           console.log(err);

@@ -3,6 +3,7 @@ import axios from "axios";
 import { IRestaurant } from "./Interface/Interface";
 import Image from "next/image";
 import Utils from "@/utils/helper";
+import { toast } from "react-toastify";
 
 export const Header = ({ board }: { board: string }) => {
   const resId = typeof window !== "undefined" ? localStorage.getItem("id") : "";
@@ -13,7 +14,7 @@ export const Header = ({ board }: { board: string }) => {
       axios
         .get(`${Utils.API_URL}/restaurantadmin?id=${resId}`)
         .then((res) => setResDate(res.data.result))
-        .catch((err) => console.log(err));
+        .catch((err) => toast("failed to get restaurant's data"));
     }
   }, [resId]);
 

@@ -6,6 +6,8 @@ import { FaGoogle } from "react-icons/fa";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Utils from "@/utils/helper";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login(): JSX.Element {
   const defUser = {
@@ -25,23 +27,25 @@ export default function Login(): JSX.Element {
           localStorage.setItem("token", await res.data.token);
           localStorage.setItem("id", await res.data.data._id);
           setFailed(false);
+          toast('Successfully logged in')
           route.push("/dashboard");
-          alert("amjilttai nevterlee");
         } else {
-          console.log("loggin failed");
           setFailed(true);
+          toast('Login failed')
         }
         // route.push('/profile')
       })
       .catch((err) => {
         setFailed(true);
         setRestaurant(defUser);
-        console.log(err);
+        toast('Failed')
       });
   };
 
+
   return (
     <div className="text-center pt-20">
+
       <Link href={"/"}>
         <div className="flex items-center ml-10 hover:text-sky-500">
           {" "}

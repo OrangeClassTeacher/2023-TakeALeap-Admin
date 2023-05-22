@@ -5,6 +5,7 @@ import axios from "axios";
 import FoodMenuModal from "./FoodMenuModal";
 import { useRouter } from "next/router";
 import Utils from "@/utils/helper";
+import { toast } from "react-toastify";
 
 export const FoodsMenu = ({
   getFood,
@@ -39,7 +40,7 @@ export const FoodsMenu = ({
       .then((res) => {
         setGetFood(res.data.result);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast('Failed to food'));
   };
 
   const deleteFood = (id: any) => {
@@ -50,7 +51,7 @@ export const FoodsMenu = ({
           res.data.status ? (alert("succes"), getData()) : alert("try again");
         })
         .catch((err) => {
-          console.log(err);
+          toast('Failed to delete');
         });
     }
   };
@@ -59,7 +60,7 @@ export const FoodsMenu = ({
     await axios
       .get(`${Utils.API_URL}/food?id=${id}`)
       .then((res) => setFood({ ...res.data.result, token: token }))
-      .catch((err) => console.log(err));
+      .catch((err) => toast('Failed to get data'));
     setModal(!modal);
     route.push(`/menu?id=${id}`);
   };

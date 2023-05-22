@@ -22,8 +22,6 @@ export default function Home() {
                   </span>
                 </button>
               </Link>
-
-
             </div>
           </div>
         </div>

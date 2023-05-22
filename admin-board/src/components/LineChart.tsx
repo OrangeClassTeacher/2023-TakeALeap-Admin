@@ -13,6 +13,7 @@ import { Line } from 'react-chartjs-2';
 import { IDashboardMonthly } from './Interface/Interface';
 import Utils from '@/utils/helper';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 ChartJS.register(
@@ -48,7 +49,7 @@ export default function LineChart() {
                 }));
                 setResData(data);
             } catch (error) {
-                console.log(error);
+                toast('Failed to get data');
             }
         };
 

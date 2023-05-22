@@ -8,6 +8,7 @@ import Utils from "@/utils/helper";
 import { IDashboard } from "@/components/Interface/Interface";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import LineChart from "@/components/LineChart";
+import { toast } from "react-toastify";
 
 export default function Index(): JSX.Element {
 
@@ -23,7 +24,7 @@ export default function Index(): JSX.Element {
         .then((res) => {
           setResData(res.data.data);
         })
-        .catch((err) => console.log(err))
+        .catch((err) => toast('Failed to get data'))
         .finally(() => setLoading(false))
     }
   }, [resId]);
