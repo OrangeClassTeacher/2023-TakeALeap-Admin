@@ -17,7 +17,7 @@ export default function ProfileInfo({ resData }: { resData: any }) {
                 </h3>
             </div>
             <div className="flex flex-row  ">
-                <label className="font-bold w-2/6">Discription:</label>
+                <label className="font-bold w-2/6">Description:</label>
                 <h3 className="border-b w-4/6 focus:outline-none focus:border-purple-600 focus:border-b-2 transition-colors peer">
                     {" "}
                     {resData?.description}

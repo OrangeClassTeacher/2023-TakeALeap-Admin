@@ -250,6 +250,7 @@ export const ProfileResEdit = ({
                   Facebook link:
                 </label>
                 <input
+
                   value={resData?.contact?.facebook}
                   onChange={(e) => {
                     const inputVal = e.target.value;
@@ -318,15 +319,35 @@ export const ProfileResEdit = ({
                   Weekday: OPEN hour ~~~ CLOSE hour
                 </label>
                 <div className="flex">
+                  {/* <input
+                  defaultValue={''}
+                  value={resData?.contact?.phone}
+                  onChange={(e) => {
+                    const inputVal = e.target.value
+                    if (inputVal.length !== 9) {
+                      setResData({
+                        ...resData,
+                        contact: { ...resData.contact, phone: e.target.value },
+                      })
+                    } else {
+                      toast('Utasnii dugaaraa zuw oruulna uu')
+                    }
+                  }
+                  }
+                  minLength={8}
+                  max={8}
+                  type="number"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                /> */}
                   <input
                     defaultValue={''}
                     type='number'
                     value={resData?.schedule?.weekday?.open}
-                    max='24'
-                    min="2"
+                    max={24}
+                    maxLength={2}
                     onChange={(e) => {
                       const inputVal = Number(e.target.value)
-                      if (inputVal > 0 && inputVal <= 24) {
+                      if (inputVal >= 0 && inputVal <= 24) {
                         setResData({
                           ...resData,
                           schedule: {
@@ -348,7 +369,7 @@ export const ProfileResEdit = ({
                     value={resData?.schedule?.weekday?.close}
                     onChange={(e) => {
                       const inputVal = Number(e.target.value)
-                      if (inputVal > 0 && inputVal <= 24) {
+                      if (inputVal >= 0 && inputVal <= 24) {
                         setResData({
                           ...resData,
                           schedule: {
@@ -384,7 +405,7 @@ export const ProfileResEdit = ({
                     value={resData?.schedule?.weekend?.open}
                     onChange={(e) => {
                       const inputVal = Number(e.target.value)
-                      if (inputVal > 0 && inputVal <= 24) {
+                      if (inputVal >= 0 && inputVal <= 24) {
                         setResData({
                           ...resData,
                           schedule: {
@@ -407,7 +428,7 @@ export const ProfileResEdit = ({
                     value={resData?.schedule?.weekend?.close}
                     onChange={(e) => {
                       const inputVal = Number(e.target.value)
-                      if (inputVal > 0 && inputVal <= 24) {
+                      if (inputVal >= 0 && inputVal <= 24) {
                         setResData({
                           ...resData,
                           schedule: {

@@ -13,7 +13,7 @@ export const Map = ({ resData }: { resData: IRestaurant }) => {
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: "AIzaSyAhjl1X_pQkIAeTUWlWv4cKKUDqgyxDCQE" as string,
     })
-    if (!isLoaded || !resData) return <Dna />;
+    if (!resData) return <Dna />;
     return (
         <div className="w-full h-full">
             <GoogleMap

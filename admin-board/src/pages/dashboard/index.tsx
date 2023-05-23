@@ -6,7 +6,7 @@ import { Dna } from "react-loader-spinner";
 import { BiTime, BiCommentDetail } from 'react-icons/bi'
 import Utils from "@/utils/helper";
 import { IDashboard } from "@/components/Interface/Interface";
-import { AiOutlineArrowUp } from "react-icons/ai";
+import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 import LineChart from "@/components/LineChart";
 import { toast } from "react-toastify";
 
@@ -51,29 +51,27 @@ export default function Index(): JSX.Element {
         <div className="flex flex-col w-full gap-5">
 
           <div className="flex gap-5 justify-between w-full">
-            <div className="bg-white rounded-lg p-10 w-3/6">
+            <div className="bg-white rounded-lg p-5 w-3/6">
               <h1 className="text-lg">Restaurant Rate</h1>
-              <div className="flex">
-
-                <p className="text-black text-lg">
+              <div className="flex gap-3">
+                <p className="text-black text-4xl">
                   {resData?.resRate?.currentAvgRateRes[0]?.avg_rate ? resData?.resRate?.currentAvgRateRes[0]?.avg_rate : "No Data"}
                 </p>
-                <span className="flex items-center gap-3">
+                <span className="flex items-center gap-3 text-3xl">
                   {resData?.resRate?.currentAvgRateRes?.[0]?.avg_rate && resData?.resRate?.previousAvgRateRes?.[0]?.avg_rate &&
-                    resData?.resRate?.currentAvgRateRes[0]?.avg_rate - resData?.resRate?.previousAvgRateRes[0]?.avg_rate > 0 ? <AiOutlineArrowUp /> : <AiOutlineArrowUp style={{ transform: "rotate(180deg)" }} />}
+                    resData?.resRate?.currentAvgRateRes[0]?.avg_rate - resData?.resRate?.previousAvgRateRes[0]?.avg_rate > 0 ? <AiOutlineArrowUp style={{ color: "green" }} /> : <AiOutlineArrowDown style={{ color: "red" }} />}
                 </span>
               </div>
             </div>
-            <div className="bg-white rounded-lg p-10 w-3/6">
+            <div className="bg-white rounded-lg p-5 w-3/6">
               <h1 className="text-lg">Food Rate of Restaurant</h1>
-              <div className="flex">
-
-                <p className="text-black text-lg">
+              <div className="flex gap-3">
+                <p className="text-black text-4xl">
                   {resData?.foodRate?.currentAvgRateFood[0]?.avg_rate ? resData?.foodRate?.currentAvgRateFood[0]?.avg_rate : "No Data"}
                 </p>
-                <span className="flex items-center gap-3">
+                <span className="flex items-center gap-3 text-3xl">
                   {resData?.foodRate?.currentAvgRateFood?.[0]?.avg_rate && resData?.foodRate?.previousAvgRateFood?.[0]?.avg_rate &&
-                    resData?.foodRate?.currentAvgRateFood[0]?.avg_rate - resData?.foodRate?.previousAvgRateFood[0]?.avg_rate > 0 ? <AiOutlineArrowUp /> : <AiOutlineArrowUp style={{ transform: "rotate(180deg)" }} />}
+                    resData?.foodRate?.currentAvgRateFood[0]?.avg_rate - resData?.foodRate?.previousAvgRateFood[0]?.avg_rate > 0 ? <AiOutlineArrowUp style={{ color: "green" }} /> : <AiOutlineArrowDown style={{ color: "red" }} />}
                 </span>
               </div>
             </div>
@@ -120,39 +118,42 @@ export default function Index(): JSX.Element {
       </div>
       <div className="flex flex-col gap-2 bg-white border-2 rounded-lg my-5 p-10">
         <h2 className="text-2xl mb-5 font-semibold border-b-4 p-6">Popular foods</h2>
-        {
-          resData?.topFoods.map((item: any, index: any) => {
+        <div className="flex w-full">
 
-            return (
-              <div className="flex flex-col w-2/6 border-2 rounded-lg p-5" key={index}>
-                <Image
-                  src={item.food.img[0] || "null"}
-                  alt={item.food.foodName}
-                  width={200}
-                  height={200}
-                  className="item-center rounded-lg w-4/6 h-1/6" />
-                <div className="flex gap-5">
-                  <h4 className="w-2/6 font-semibold">Foodname:</h4>
-                  <h4 className="w-4/6">{item.food.foodName}</h4>
-                </div>
-                <div className="flex gap-5">
-                  <h4 className="w-2/6 font-semibold">Price:</h4>
-                  <p className="w-4/6">Price: {item.food.price}</p>
-                </div>
-                <div className="flex gap-5">
-                  <h4 className="w-2/6 font-semibold">Food type:</h4>
-                  <p className="w-4/6">{item.food.foodType}</p>
-                </div>
-                <div className="flex gap-5">
-                  <h4 className="w-2/6 font-semibold">Ingredients:</h4>
-                  <p className="w-4/6">{item.food.ingredients}</p>
-                </div>
-              </div>
+          {
+            resData?.topFoods.map((item: any, index: any) => {
 
+              return (
+                <div className="flex flex-col w-2/6 border-2 rounded-lg p-3" key={index}>
+                  <Image
+                    src={item.food.img[0] || "null"}
+                    alt={item.food.foodName}
+                    width={200}
+                    height={200}
+                    className="item-center rounded-lg w-5/6 h-4/6" />
+                  <div className="flex gap-5">
+                    <h4 className="w-2/6 font-semibold">Foodname:</h4>
+                    <h4 className="w-4/6">{item.food.foodName}</h4>
+                  </div>
+                  <div className="flex gap-5">
+                    <h4 className="w-2/6 font-semibold">Price:</h4>
+                    <p className="w-4/6">Price: {item.food.price}</p>
+                  </div>
+                  <div className="flex gap-5">
+                    <h4 className="w-2/6 font-semibold">Food type:</h4>
+                    <p className="w-4/6">{item.food.foodType}</p>
+                  </div>
+                  <div className="flex gap-5">
+                    <h4 className="w-2/6 font-semibold">Ingredients:</h4>
+                    <p className="w-4/6">{item.food.ingredients}</p>
+                  </div>
+                </div>
+
+              )
+            }
             )
           }
-          )
-        }
+        </div>
       </div>
     </div>
   );
