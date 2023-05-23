@@ -72,7 +72,7 @@ export default function ImageProfile({ resData, setMulti, modal, setModal }: { r
       <div className="flex flex-col absolute w-2/6 -bottom-16 left-10">
         <div className="relative w-3/5">
           <Image
-            className="rounded-full  -bottom-20 left-20 border w-[200px] h-[200px] object-cover"
+            className="rounded-full  -bottom-20 left-20 border w-[200px] h-[200px] m-0 object-cover"
             src={resData?.logoImg ? resData?.logoImg : logo}
             alt="food"
             width={200}
