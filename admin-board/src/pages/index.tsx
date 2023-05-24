@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col justify-center items-center gap-[700px] h-screen w-full bg-[url('../assets/restaurant-interior.jpg')] bg-cover">
+    <div className="flex flex-col justify-center items-center gap-[700px] h-screen w-full bg-[url('https://res.cloudinary.com/dnpeugfk4/image/upload/v1684902985/oifzqe3atmlcmsdpbef3.jpg')] bg-cover">
       <div className="w-[500px] h-[400px] bg-black/75 rounded  flex items-center justify-center">
         <div>
           <h1 className="text-4xl text-white text-semibold">Welcome To Restaurant Page</h1>
