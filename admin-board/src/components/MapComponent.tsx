@@ -15,7 +15,7 @@ export default function MapComponent({ setResData, resData }: { resData: IRestau
         googleMapsApiKey: "AIzaSyAhjl1X_pQkIAeTUWlWv4cKKUDqgyxDCQE",
     });
     const [startCoordinates, setStartCoordinates] = useState({ x: "", y: "" });
-    const [choose, setChoose] = useState<boolean>(false); //false - start, true - finish
+    const [choose, setChoose] = useState<boolean>(false);
 
 
     if (!isLoaded) return <div>Loading...</div>;
