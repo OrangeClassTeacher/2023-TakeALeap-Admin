@@ -80,7 +80,7 @@ export default function Index(): JSX.Element {
         </div>
 
         <div className="bg-white rounded-lg p-10 w-4/6 overflow-y-auto max-h-[600px]">
-          <h1>Latest comments</h1>
+          <h1 className="text-2xl pb-10">Latest comments</h1>
           {
             resData?.latestComments?.map((item: any, index: any) => {
               const dateObj = new Date(item.createdAt);
