@@ -87,13 +87,12 @@ export default function LineChart() {
     const datasets = [
         {
             label: 'Average rate by day',
-            data: resData.map(e => {
-                const dataDate = e._id.substring(0, 10); // Extract the date part (YYYY-MM-DD) from resData._id
-                const matchingLabel = weeklyDates.find((label: any) => label === dataDate);
-                return matchingLabel ? e.avg_rate : null;
+            data: weeklyDates.map((date) => {
+                const matchingData = resData.find((e) => e._id.substring(0, 10) === date);
+                return matchingData ? matchingData.avg_rate : 0;
             }),
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgb(131, 56, 236)',
+            backgroundColor: 'rgba(131, 56, 236, 0.5)',
         },
     ];
     const data = {
